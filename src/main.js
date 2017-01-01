@@ -8,9 +8,7 @@ import bootsplash from './pages/bootsplash';
 import login from './pages/login';
 import test from './pages/test';
 
-var styles = StyleSheet.create({
-  container: { flex: 1 }
-});
+var styles = StyleSheet.create({ container: { flex: 1 } });
 
 // Toutes les routes de l'application
 const ROUTES = {
