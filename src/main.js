@@ -34,7 +34,7 @@ export default class Main extends Component {
     return (
       <Navigator
         style={ styles.container }
-        initialRoute={ { name: 'login' } }
+        initialRoute={ { name: 'bootsplash' } }
         renderScene={ this.navRenderScene }
         configureScene={ () => { return Navigator.SceneConfigs.FadeAndroid; } }
       />

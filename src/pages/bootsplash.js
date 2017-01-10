@@ -29,10 +29,15 @@ export default class Bootsplash extends Component {
     super(props);
   }
 
+  /**
+   * Fonction a utiliser s'il on veut faire des préparations avant le render
+   * NOTE: react-native recommande constructor au lieu de componentWillMount
+   * mais dans l'effet les 2 sont appelés
+   */
   componentWillMount() {
     var nav = this.props.navigator;
 
-    automaticLogin(() => {
+    this.automaticLogin(() => {
       setTimeout(() => {
         nav.replace({ name: 'login' });
       }, 7500);
@@ -44,6 +49,7 @@ export default class Bootsplash extends Component {
     {
       const loginInfos = await AsyncStorage.getItem('Login');
       if(loginInfos !== null) login(loginInfos);
+      else errCB();
     } catch(error)
     {
       console.error(error);
@@ -59,7 +65,7 @@ export default class Bootsplash extends Component {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(infos);
+      body: JSON.stringify(infos)
     };
 
     try
@@ -74,6 +80,7 @@ export default class Bootsplash extends Component {
     {
       console.error(error);
     }
+  }
 
   render() {
     return (
