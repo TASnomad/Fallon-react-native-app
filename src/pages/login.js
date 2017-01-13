@@ -30,6 +30,8 @@ var styles = StyleSheet.create({
   alignRight: { alignSelf: 'flex-end' },
 });
 
+const NO_NETWORK = "Network request failed";
+
 export default class Login extends Component {
 
   constructor(props) {
@@ -41,8 +43,14 @@ export default class Login extends Component {
       login: '',
       password: '',
       pendingLoginRequest: false,
+      error: false,
+      errorTxt: '',
       remember: false,
     };
+  }
+
+  handlerLoginError(msg) {
+    this.setState({ error: true, errorTxt: (msg === NO_NETWORK) ? "Tu n'as pas de réseau pour te connecter !" : msg });
   }
 
   submit() {
@@ -73,7 +81,7 @@ export default class Login extends Component {
       if(data.hasOwnProperty("session"))
         this.props.navigator.push({ name: "test" });
     })
-    .catch((error) => { console.error(error); });
+    .catch((error) => { this.handlerLoginError(error.message); });
   }
 
   render() {
@@ -120,6 +128,10 @@ export default class Login extends Component {
             checked={ this.state.remember }
             onChange={ (value) => { this.setState({ remember: !value }); } }
           />
+        </Container>
+
+        <Container>
+          <Label style={ styles.scroll } text={ this.state.errorTxt }/>
         </Container>
 
       </ScrollView>
