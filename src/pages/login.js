@@ -15,6 +15,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Container from '../components/Container';
 import Label from '../components/Label';
 
+import Ajax from '../utils.js';
+
 var styles = StyleSheet.create({
   scroll: {
     //backgroundColor: '#4CAF50',
@@ -50,7 +52,7 @@ export default class Login extends Component {
   }
 
   handlerLoginError(msg) {
-    this.setState({ error: true, errorTxt: (msg === NO_NETWORK) ? "Tu n'as pas de réseau pour te connecter !" : msg });
+    this.setState({ error: true, errorTxt: (msg === NO_NETWORK) ? "Le serveur semble indisponible, réessayer plus tard" : msg });
   }
 
   submit() {
@@ -61,6 +63,7 @@ export default class Login extends Component {
     this.setState({ pendingLoginRequest: true });
 
     var req = {
+      url: 'http://cirrusjs.me:9865/login',
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -69,7 +72,7 @@ export default class Login extends Component {
       body: JSON.stringify({ log: login, pass: password })
     };
 
-    return fetch('http://cirrusjs.me:9865/login', req)
+    /*return fetch('http://cirrusjs.me:9865/login', req)
     .then((response) => {
       this.setState({ pendingLoginRequest: false });
 
@@ -81,7 +84,11 @@ export default class Login extends Component {
       if(data.hasOwnProperty("session"))
         this.props.navigator.push({ name: "test" });
     })
-    .catch((error) => { this.handlerLoginError(error.message); });
+    .catch((error) => { this.handlerLoginError(error.message); });*/
+
+    Ajax(req)
+    .then((data) => { console.log(data); })
+    .catch((error) => { console.log(error); this.handlerLoginError(error.message) });
   }
 
   render() {

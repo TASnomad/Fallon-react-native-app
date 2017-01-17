@@ -21,9 +21,8 @@ var processStatus = function(response) {
 var parseResponse = function(response) { return response.json(); }
 
 var wrappedFetch = function() {
-  var promised = wrappedPromise();
-
   var args = Array.prototype.slice.call(arguments);
+  var promised = wrappedPromise();
 
   fetch.apply(null, args).
   then(function(response) {
@@ -57,7 +56,7 @@ var AjaxFunction = function(params) {
 
   (params.cacheBusting) ? params.url + '?' + new Date().getTime() : params.url;
 
-  var wrapped = wrappedFetch();
+  var wrapped = wrappedFetch(params);
 
   var timeoutId = setTimeout(function() {
     wrapped.reject(new Error("La requète n'a pas aboutie !"));
