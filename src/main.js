@@ -8,6 +8,19 @@ import bootsplash from './pages/bootsplash';
 import login from './pages/login';
 import test from './pages/test';
 
+var PushNotification = require('react-native-push-notification');
+
+PushNotification.configure({
+  onRegister: function(token) { console.log("GCM token: " + JSON.stringify(token)); },
+
+  onNotification: function(notification) { console.log("New notification: " + notification); },
+
+  // Change if using a new GCM
+  senderID: "571301329457",
+  popInitialNotification: true,
+  requestPermissions: true
+});
+
 var styles = StyleSheet.create({ container: { flex: 1 } });
 
 // Toutes les routes de l'application
