@@ -48,6 +48,7 @@ export default class Login extends Component {
       error: false,
       errorTxt: '',
       remember: false,
+      gcmToken: this.props.route.token || "",
     };
   }
 

@@ -9,6 +9,27 @@ import {
 
 import Container from '../components/Container';
 import Label from '../components/Label';
+/**
+ * We could create the token on the main script
+ * but to send the token in the DB it's better to do this 
+ */
+import PushNotification from 'react-native-push-notification';
+
+var gcmToken = null;
+
+PushNotification.configure({
+  onRegister: function(token) {
+    gcmToken =  token.token;
+    console.log("GCM token: " + gcmToken);
+  },
+
+  onNotification: function(notification) { console.log("New notification: " + notification); },
+
+  // Change if using a new GCM
+  senderID: "571301329457",
+  popInitialNotification: true,
+  requestPermissions: true
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -39,7 +60,11 @@ export default class Bootsplash extends Component {
 
     this.automaticLogin(() => {
       setTimeout(() => {
-        nav.replace({ name: 'login' });
+        nav.push({
+          name: 'login',
+          token: gcmToken
+        });
+        // nav.replace({ name: 'login' });
       }, 7500);
     });
   }
