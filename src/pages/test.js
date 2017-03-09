@@ -4,15 +4,16 @@ import {
   BackAndroid,
   Button,
   StyleSheet,
+  ScrollView,
   Text,
   TouchableWithFeedBack,
   View
 } from 'react-native';
 
 import Container from '../components/Container';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Label from '../components/Label';
 
-const PRESS_TIMER = 400;
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 var styles = StyleSheet.create({
   container: {
@@ -44,49 +45,18 @@ export default class Test extends Component {
   constructor(props) {
     super(props);
 
-    /*BackAndroid.removeEventListener('hardwareBackPress', () => {
-      if(this.props.navigator && this.props.navigator.getCurrentRoutes().length > 1)
-      {
-        this.props.navigator.pop();
-        return true;
-      }
-      return false;
-    });
-
-    setTimeout(() => { this.props.navigator.pop(); }, 7500);*/
+    this.state = {
+      id: this.props.route.id
+    };
   }
 
   render() {
     return (
-      <ToolbarAndroid
-        title="Navigator"
-        actions= {
-          [
-            { title: 'Exit', show: 'always' }
-          ]
-        }
-        onActionSelected={ this.toolbarSelected }
-      />
+      <ScrollView>
+        <Container>
+          <Label text={ this.state.id } />
+        </Container>
+      </ScrollView>
     );
   }
-
-  toolbarSelected(position) {
-    if(position === 0) Alert.confirm("Test", "Envie de partir ?");
-  }
-
-  /*render() {
-    return (
-      <View style={ styles.container }>
-        <TouchableWithoutFeedback
-          onPressIn={ this.handleIn }
-          onPressOut={ this.handleOut }
-        >
-        <View>
-          <Animated.View />
-          <Text>Press and hold</Text>
-        </View>
-        </TouchableWithoutFeedback>
-      </View>
-    );
-  }*/
 }

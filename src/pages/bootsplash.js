@@ -11,7 +11,7 @@ import Container from '../components/Container';
 import Label from '../components/Label';
 /**
  * We could create the token on the main script
- * but to send the token in the DB it's better to do this 
+ * but to send the token in the DB it's better to do this
  */
 import PushNotification from 'react-native-push-notification';
 
@@ -64,8 +64,7 @@ export default class Bootsplash extends Component {
           name: 'login',
           token: gcmToken
         });
-        // nav.replace({ name: 'login' });
-      }, 7500);
+      }, 500);
     });
   }
 

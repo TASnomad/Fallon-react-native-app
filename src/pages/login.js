@@ -53,7 +53,7 @@ export default class Login extends Component {
   }
 
   handlerLoginError(msg) {
-    this.setState({ error: true, errorTxt: (msg === NO_NETWORK) ? "Le serveur semble indisponible, réessayer plus tard" : msg });
+    this.setState({ error: true, errorTxt: msg });
   }
 
   submit() {
@@ -63,33 +63,27 @@ export default class Login extends Component {
 
     this.setState({ pendingLoginRequest: true });
 
-    var req = {
-      url: 'http://cirrusjs.me:9865/login',
+    var req =
+    {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ log: login, pass: password })
+      body: JSON.stringify({ log: login, pass: password, token: this.state.gcmToken })
     };
 
-    /*return fetch('http://cirrusjs.me:9865/login', req)
+    return fetch('http://fallon.16mb.com/Fallon/webservices/connexion.php', req)
     .then((response) => {
       this.setState({ pendingLoginRequest: false });
 
-      if(!response.ok)
-        return;
-      return response.json();
+      if(response.status == 200)
+        return response.json();
     })
     .then((data) => {
-      if(data.hasOwnProperty("session"))
-        this.props.navigator.push({ name: "test" });
+        this.props.navigator.push({ name: "test", id: data.id });
     })
-    .catch((error) => { this.handlerLoginError(error.message); });*/
-
-    Ajax(req)
-    .then((data) => { console.log(data); })
-    .catch((error) => { console.log(error); this.handlerLoginError(error.message) });
+    .catch((error) => { this.handlerLoginError(error.message); });
   }
 
   render() {
