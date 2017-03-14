@@ -4,6 +4,7 @@ import {
   Button,
   Text,
   ScrollView,
+  TouchableHighlight,
   StyleSheet,
   TextInput,
   View
@@ -17,19 +18,51 @@ import Label from '../components/Label';
 
 import Ajax from '../utils.js';
 
-var styles = StyleSheet.create({
-  scroll: {
-    //backgroundColor: '#4CAF50',
-    padding: 30,
-    flexDirection: 'column'
-  },
+const styles = StyleSheet.create({
+  container: {
+      flex: 1,
+      alignItems: 'stretch',
+      justifyContent:'center',
+      backgroundColor: '#E0E0E0'
+   },
 
-  label: {
-    color: '#0D8898',
-    fontSize: 20
-  },
+   loginContainer: {
+     flex: 1,
+     justifyContent: 'center',
+     alignItems: 'center',
+   },
 
-  alignRight: { alignSelf: 'flex-end' },
+   input: {
+      width: 300,
+      color: '#555555',
+      padding: 10,
+      height: 50,
+      borderColor: '#32C5E6',
+      borderWidth: 1,
+      borderRadius: 4,
+      alignSelf: 'center',
+      backgroundColor: '#FFFFFF',
+      marginBottom: 10
+   },
+
+   button: {
+      backgroundColor: '#32C5E6',
+      padding: 10,
+      borderColor: '#32C5E6',
+      borderWidth: 1,
+      borderRadius: 5,
+      justifyContent: 'center',
+      alignItems: 'center'
+   },
+
+   label: {
+     width: 275,
+     alignSelf: 'center',
+     textAlign: 'center',
+     fontSize: 20,
+     fontWeight: '600',
+     color: '#FFFFFF',
+   }
 });
 
 const NO_NETWORK = "Network request failed";
@@ -87,7 +120,7 @@ export default class Login extends Component {
   }
 
   render() {
-    return (
+    /*return (
       <ScrollView style={ styles.scroll }>
         <Container>
           <Label text="Login" />
@@ -137,6 +170,29 @@ export default class Login extends Component {
         </Container>
 
       </ScrollView>
+    );*/
+
+    return(
+      <View style = {styles.container}>
+        <View style={ styles.loginContainer}>
+            <TextInput
+              placeholder = 'Entre ton login'
+              style = {styles.input}
+              multiline={ false }
+              underlineColorAndroid = { 'transparent' }
+            />
+            <TextInput
+              placeholder='Mot de passe'
+              secureTextEntry={ true }
+              style = { styles.input }
+              underlineColorAndroid = { 'transparent' }
+            />
+
+            <TouchableHighlight style = { styles.button }>
+              <Text style={ styles.label }> { 'Connexion'.toUpperCase() } </Text>
+            </TouchableHighlight>
+        </View>
+      </View>
     );
   }
 }
