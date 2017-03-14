@@ -70,7 +70,7 @@ export default class Login extends Component {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ log: login, pass: password, token: this.state.gcmToken })
+      body: JSON.stringify({ "log": login, "pass": password, "token": this.state.gcmToken })
     };
 
     return fetch('http://fallon.16mb.com/Fallon/webservices/connexion.php', req)
