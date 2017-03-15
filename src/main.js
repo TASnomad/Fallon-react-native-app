@@ -7,6 +7,7 @@ import {
 import bootsplash from './pages/bootsplash';
 import login from './pages/login';
 import test from './pages/test';
+import dashboard from './pages/Dashboard';
 
 var styles = StyleSheet.create({ container: { flex: 1 } });
 
@@ -14,7 +15,8 @@ var styles = StyleSheet.create({ container: { flex: 1 } });
 const ROUTES = {
   bootsplash: bootsplash,
   login: login,
-  test: test
+  test: test,
+  dashboard: dashboard
 };
 
 export default class Main extends Component {
@@ -34,7 +36,7 @@ export default class Main extends Component {
     return (
       <Navigator
         style={ styles.container }
-        initialRoute={ { name: 'bootsplash' } }
+        initialRoute={ { name: 'dashboard' } }
         renderScene={ this.navRenderScene }
         configureScene={ () => { return Navigator.SceneConfigs.FadeAndroid; } }
       />

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import {
   AsyncStorage,
+  Image,
   Button,
   Text,
   ScrollView,
   TouchableHighlight,
+  TouchableOpacity,
   StyleSheet,
   TextInput,
   View
@@ -13,23 +15,37 @@ import {
 import CheckBox from 'react-native-checkbox';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import Container from '../components/Container';
-import Label from '../components/Label';
-
-import Ajax from '../utils.js';
+import logo from '../res/img/fallon.png';
 
 const styles = StyleSheet.create({
   container: {
       flex: 1,
       alignItems: 'stretch',
       justifyContent:'center',
-      backgroundColor: '#E0E0E0'
+      backgroundColor: '#FFFFFF'
    },
 
    loginContainer: {
      flex: 1,
+     marginTop: 50,
+     alignItems: 'center',
+   },
+
+   logoContainer: {
      justifyContent: 'center',
      alignItems: 'center',
+   },
+
+   logo: {
+     justifyContent: 'center',
+     alignItems: 'stretch'
+   },
+
+   footer: {
+     justifyContent: 'center',
+     alignItems: 'center',
+     backgroundColor: 'red',
+     height: 75,
    },
 
    input: {
@@ -46,9 +62,9 @@ const styles = StyleSheet.create({
    },
 
    button: {
-      backgroundColor: '#32C5E6',
+      backgroundColor: '#4CAF50',
       padding: 10,
-      borderColor: '#32C5E6',
+      borderColor: '#4CAF50',
       borderWidth: 1,
       borderRadius: 5,
       justifyContent: 'center',
@@ -62,10 +78,18 @@ const styles = StyleSheet.create({
      fontSize: 20,
      fontWeight: '600',
      color: '#FFFFFF',
-   }
-});
+   },
 
-const NO_NETWORK = "Network request failed";
+   error: {
+     alignSelf: 'center',
+     textAlign: 'center',
+     fontSize: 20,
+     color: 'white',
+     backgroundColor: 'red',
+     fontWeight: '600'
+   },
+
+});
 
 export default class Login extends Component {
 
@@ -73,15 +97,15 @@ export default class Login extends Component {
     super(props);
 
     this.state = {
-      loginFilled: false,
-      passwordFilled: false,
       login: '',
       password: '',
       pendingLoginRequest: false,
+      result: null,
       error: false,
       errorTxt: '',
       remember: false,
-      gcmToken: this.props.route.token || "",
+      gcmToken: this.props.route.token || '',
+      btnOpcaity: 1,
     };
   }
 
@@ -94,7 +118,7 @@ export default class Login extends Component {
     let login = this.state.login;
     let password = this.state.password;
 
-    this.setState({ pendingLoginRequest: true });
+    this.setState({ pendingLoginRequest: true, error: false, errorTxt: ' ' });
 
     var req =
     {
@@ -110,87 +134,53 @@ export default class Login extends Component {
     .then((response) => {
       this.setState({ pendingLoginRequest: false });
 
-      if(response.status == 200)
+      if(response.status === 200)
         return response.json();
+
+      if(response.status === 500)
+         return response.json().then((data) => { throw data; });
+
     })
     .then((data) => {
-        this.props.navigator.push({ name: "test", id: data.id });
+        this.props.navigator.push({ name: "dashboard", id: data.id });
     })
-    .catch((error) => { this.handlerLoginError(error.message); });
+    .catch((error) => { this.handlerLoginError(error.error); });
   }
 
   render() {
-    /*return (
-      <ScrollView style={ styles.scroll }>
-        <Container>
-          <Label text="Login" />
-          <TextInput
-            onChangeText={
-              (txt) => {
-                let enabled = txt.length > 3 ? true : false ;
-                this.setState({ password : txt, passwordFilled : enabled });
-              }
-            }
-            style={ styles.textInput }
-          />
-        </Container>
-
-        <Container>
-          <Label text="Mot de passe" />
-          <TextInput
-            onChangeText={
-              (txt) => {
-                let enabled = txt.length > 3 ? true : false ;
-                this.setState({ login : txt, loginFilled : enabled });
-              }
-            }
-            secureTextEntry={ true }
-            style={ styles.textInput }
-          />
-        </Container>
-
-        <Container>
-          <Button
-            title="Connexion"
-            onPress={ this.submit.bind(this) }
-            disabled={ !this.state.loginFilled || !this.state.passwordFilled }
-          />
-        </Container>
-
-        <Container>
-          <CheckBox
-            label='Se souvenir de moi'
-            checked={ this.state.remember }
-            onChange={ (value) => { this.setState({ remember: !value }); } }
-          />
-        </Container>
-
-        <Container>
-          <Label style={ styles.scroll } text={ this.state.errorTxt }/>
-        </Container>
-
-      </ScrollView>
-    );*/
-
     return(
       <View style = {styles.container}>
+      <View style={ styles.logoContainer }>
+        <Image style={ styles.logo } source={ logo } />
+      </View>
         <View style={ styles.loginContainer}>
             <TextInput
               placeholder = 'Entre ton login'
               style = {styles.input}
               multiline={ false }
               underlineColorAndroid = { 'transparent' }
-            />
+              onChangeText={ (text) => { this.setState({ login: text }) } } />
+
             <TextInput
               placeholder='Mot de passe'
               secureTextEntry={ true }
               style = { styles.input }
               underlineColorAndroid = { 'transparent' }
-            />
+              onChangeText={ (text) => { this.setState({ password: text }) } } />
 
-            <TouchableHighlight style = { styles.button }>
+            <TouchableOpacity
+              style={[ styles.button, { opacity: this.state.btnOpcaity } ]}
+              onPressIn={ () => { this.setState({ btnOpcaity: 0.5 }); } }
+              onPress={ () => { this.submit(); } }
+              onPressOut={ () => { this.setState({ btnOpcaity: 1 }); } }>
+
               <Text style={ styles.label }> { 'Connexion'.toUpperCase() } </Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
+
+        </View>
+
+        <View style={ styles.footer }>
+          <Text style={ styles.error }>{ this.state.errorTxt }</Text>
         </View>
       </View>
     );
