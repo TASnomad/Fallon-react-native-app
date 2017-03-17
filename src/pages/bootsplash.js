@@ -9,6 +9,10 @@ import {
 
 import Container from '../components/Container';
 import Label from '../components/Label';
+
+import Img from '../res/img/bootsplash.png';
+import KEYS from '../utils/keys';
+
 /**
  * We could create the token on the main script
  * but to send the token in the DB it's better to do this
@@ -36,7 +40,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'transparent',
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: '#FFFFFF'
   }
 });
 
@@ -48,6 +53,8 @@ export default class Bootsplash extends Component {
 
   constructor(props) {
     super(props);
+
+    console.log(KEYS);
   }
 
   /**
@@ -94,7 +101,7 @@ export default class Bootsplash extends Component {
 
     try
     {
-      let response = await fetch('http://cirrusjs.me:9865/login', req);
+      let response = await fetch('http://fallon.16mb.com/Fallon/webservices/connexion.php', req);
       let data = await response.json();
 
       if(data.hasOwnProperty("session"))
@@ -109,7 +116,7 @@ export default class Bootsplash extends Component {
   render() {
     return (
       <View style={ styles.container }>
-        <Image source={ require("../res/img/bootsplash.png") } />
+        <Image source={ Img } />
         <Container>
           <Text> Projet Fallon </Text>
         </Container>

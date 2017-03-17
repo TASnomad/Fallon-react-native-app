@@ -12,8 +12,8 @@ import {
   View
 } from 'react-native';
 
-import CheckBox from 'react-native-checkbox';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import CheckBox from 'react-native-icon-checkbox';
 
 import logo from '../res/img/fallon.png';
 
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
    footer: {
      justifyContent: 'center',
      alignItems: 'center',
-     backgroundColor: 'red',
+     backgroundColor: '#FFFFFF',
      height: 75,
    },
 
@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
      alignSelf: 'center',
      textAlign: 'center',
      fontSize: 20,
-     color: 'white',
-     backgroundColor: 'red',
+     color: 'red',
+     backgroundColor: '#FFFFFF',
      fontWeight: '600'
    },
 
@@ -107,6 +107,7 @@ export default class Login extends Component {
       gcmToken: this.props.route.token || '',
       btnOpcaity: 1,
     };
+
   }
 
   handlerLoginError(msg) {
@@ -176,6 +177,15 @@ export default class Login extends Component {
 
               <Text style={ styles.label }> { 'Connexion'.toUpperCase() } </Text>
             </TouchableOpacity>
+
+            <CheckBox
+              label="Connexion automatique"
+              size={ 30 }
+              checked={ this.state.remember }
+              onPress={ (checked) => { this.setState({ remember: checked }); } }
+              checkedIconName="check-box"
+              uncheckedIconName="check-box-outline-blank"
+            />
 
         </View>
 
