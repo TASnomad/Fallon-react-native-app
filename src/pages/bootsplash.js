@@ -11,7 +11,7 @@ import Container from '../components/Container';
 import Label from '../components/Label';
 
 import Img from '../res/img/bootsplash.png';
-import KEYS from '../utils/keys';
+import STORAGE_KEYS from '../utils/keys';
 
 /**
  * We could create the token on the main script
@@ -53,8 +53,6 @@ export default class Bootsplash extends Component {
 
   constructor(props) {
     super(props);
-
-    console.log(KEYS);
   }
 
   /**
@@ -78,8 +76,12 @@ export default class Bootsplash extends Component {
   async automaticLogin(errCB) {
     try
     {
-      const loginInfos = await AsyncStorage.getItem('Login');
-      if(loginInfos !== null) login(loginInfos);
+      var login = await AsyncStorage.getItem(STORAGE_KEYS.STORED_LOGIN);
+      var password = await AsyncStorage.getItem(STORAGE_KEYS.STORED_PASSWORD);
+      var token = await AsyncStorage.getItem(STORAGE_KEYS.STORED_TOKEN);
+
+      if(login !== null && password !== null && token !== null)
+        login(login, password, token);
       else errCB();
     } catch(error)
     {
@@ -89,14 +91,15 @@ export default class Bootsplash extends Component {
     }
   }
 
-  async login(infos) {
+  async login(infos, password, token) {
+    console.log("test");
     var req = {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(infos)
+      body: JSON.stringify({ "log": linfos, "pass": password, "token": token })
     };
 
     try
@@ -104,8 +107,9 @@ export default class Bootsplash extends Component {
       let response = await fetch('http://fallon.16mb.com/Fallon/webservices/connexion.php', req);
       let data = await response.json();
 
-      if(data.hasOwnProperty("session"))
-        this.props.navigator.push({ name: "test" });
+      console.log(data);
+
+      if(data.hasOwnProperty("group")) this.props.navigator.push({ name: "dashboard", group: data.group });
     }
     catch(error)
     {

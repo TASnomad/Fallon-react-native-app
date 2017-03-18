@@ -5,7 +5,6 @@ import {
   Button,
   Text,
   ScrollView,
-  TouchableHighlight,
   TouchableOpacity,
   StyleSheet,
   TextInput,
@@ -16,6 +15,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import CheckBox from 'react-native-icon-checkbox';
 
 import logo from '../res/img/fallon.png';
+
+import STORAGE_KEYS from '../utils/keys';
 
 const styles = StyleSheet.create({
   container: {
@@ -143,7 +144,22 @@ export default class Login extends Component {
 
     })
     .then((data) => {
-        this.props.navigator.push({ name: "dashboard", id: data.id });
+      if(this.state.remember)
+      {
+          try
+          {
+            AsyncStorage.setItem(STORAGE_KEYS.STORED_LOGIN, this.state.login, () => {
+              AsyncStorage.setItem(STORAGE_KEYS.STORED_PASSWORD, this.state.password, () => {
+                AsyncStorage.setItem(STORAGE_KEYS.STORED_TOKEN, this.state.gcmToken, () => {
+                  this.props.navigator.push({ name: "dashboard", group: data.group });
+                });
+              });
+            });
+          } catch (e) {
+            console.log(e);
+          }
+      }
+      this.props.navigator.push({ name: "dashboard", group: data.group });
     })
     .catch((error) => { this.handlerLoginError(error.error); });
   }

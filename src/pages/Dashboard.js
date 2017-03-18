@@ -12,26 +12,46 @@ import {
   View
 } from 'react-native';
 
+import PROMOS from '../utils/promo.js';
+
 export default class Dashboard extends Component {
   constructor(props) {
     super(props);
 
+    // let d = new Date();
+    // d.setHours(0, 0, 0, 0);
+    // d.setDate(d.getDate()+4-(d.getDay()||7));
+    // let week = Math.ceil((((d-new Date(d.getFullYear(),0,1))/8.64e7)+1)/7);
 
-      let d = new Date();
-      d.setHours(0, 0, 0, 0);
-      d.setDate(d.getDate()+4-(d.getDay()||7));
-      let week = Math.ceil((((d-new Date(d.getFullYear(),0,1))/8.64e7)+1)/7);
+    this.state = {
+      dayOfWeek: d.getDay() - 1,
+      weekNumber: week + 18,
+      group: this.props.route.group,
+      url: ''
+    };
 
-      this.state = {
-        dayOfWeek: d.getDay() - 1,
-        weekNumber: week + 18,
-      };
+    let update = this.calculateDate();
+
+    this.setState({
+      dayOfWeek: update.day,
+      weekNumber: udpate.week,
+      url: update.url
+    });
   }
 
-  getCurrentWeek() {
-    let date = new Date();
-    let day = date.getDay();
-    console.log(day.getWeekNumber());
+  calculateDate() {
+    let d = new Date();
+    d.setHours(0, 0, 0, 0);
+    d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+    let week = Math.ceil((((d - new Date(d.getFullYear(), 0, 1)) / 8.64e7) + 1) / 7);
+
+    let obj = {
+      day: d.getDay() - 1,
+      week: week + 18,
+      url: 'http://www.iut-fbleau.fr/EDT/+'+obj.week+'-'+obj.day+'-'+PROMOS[this.state.group]+'.gif'
+    }
+
+    return obj;
   }
 
   render() {
