@@ -73,50 +73,53 @@ export default class Bootsplash extends Component {
     });
   }
 
-  async automaticLogin(errCB) {
-    try
-    {
-      var login = await AsyncStorage.getItem(STORAGE_KEYS.STORED_LOGIN);
-      var password = await AsyncStorage.getItem(STORAGE_KEYS.STORED_PASSWORD);
-      var token = await AsyncStorage.getItem(STORAGE_KEYS.STORED_TOKEN);
+  automaticLogin(errCB) {
+    var login = null;
+    var password = null;
+    var token = null;
 
-      if(login !== null && password !== null && token !== null)
-        login(login, password, token);
-      else errCB();
-    } catch(error)
-    {
-      console.error(error);
-      console.info("Automatic not enabled ...");
-      errCB();
-    }
+    AsyncStorage.getItem(STORAGE_KEYS.STORED_LOGIN).then((stored_login) => {
+      if(stored_login) login = stored_login;
+
+      return AsyncStorage.getItem(STORAGE_KEYS.STORED_PASSWORD);
+    })
+    .then((stored_pass) => {
+
+      if(stored_pass) password = stored_pass;
+
+      return AsyncStorage.getItem(STORAGE_KEYS.STORED_TOKEN);
+    });
+    .then((stored_token) => {
+      if(stored_token) token = stored_token;
+      return submit(login, password, token, errCB);
+    });
   }
 
-  async login(infos, password, token) {
-    console.log("test");
+  submit(login, password, token, errCB) {
+    token = token || ""; // Just in case
+
     var req = {
-      method: 'POST',
+      method: "POST",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ "log": linfos, "pass": password, "token": token })
+      body: JSON.stringify({ "log": login, "pass": password, "token": token });
     };
 
-    try
-    {
-      let response = await fetch('http://fallon.16mb.com/Fallon/webservices/connexion.php', req);
-      let data = await response.json();
+    return fetch('http://fallon.16mb.com/Fallon/webservices/connexion.php', req)
+    .then((res) => {
+      if(res.status === 200) return res.json().then((data) => {
+        this.props.navigator.push({ name: "dashboard", group: data.group });
+      });
 
-      console.log(data);
+      if(res.status() === 500) return res.json().then(data) => {
+        errCB();
+      });
 
-      if(data.hasOwnProperty("group")) this.props.navigator.push({ name: "dashboard", group: data.group });
-    }
-    catch(error)
-    {
-      console.error(error);
-    }
+      else errCB();
+    });
   }
-
   render() {
     return (
       <View style={ styles.container }>
