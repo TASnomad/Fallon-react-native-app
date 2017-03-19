@@ -11,7 +11,7 @@ import Container from '../components/Container';
 import Label from '../components/Label';
 
 import Img from '../res/img/bootsplash.png';
-import KEYS from '../utils/keys';
+import STORAGE_KEYS from '../utils/keys';
 
 /**
  * We could create the token on the main script
@@ -45,6 +45,8 @@ const styles = StyleSheet.create({
   }
 });
 
+var _navigator = null;
+
 /**
  * TODO: add automatic login if enabled
  */
@@ -54,20 +56,11 @@ export default class Bootsplash extends Component {
   constructor(props) {
     super(props);
 
-    console.log(KEYS);
-  }
-
-  /**
-   * Fonction a utiliser s'il on veut faire des préparations avant le render
-   * NOTE: react-native recommande constructor au lieu de componentWillMount
-   * mais dans l'effet les 2 sont appelés
-   */
-  componentWillMount() {
-    var nav = this.props.navigator;
+    _navigator = this.props.navigator;
 
     this.automaticLogin(() => {
       setTimeout(() => {
-        nav.push({
+        _navigator.push({
           name: 'login',
           token: gcmToken
         });
@@ -75,44 +68,63 @@ export default class Bootsplash extends Component {
     });
   }
 
-  async automaticLogin(errCB) {
-    try
-    {
-      const loginInfos = await AsyncStorage.getItem('Login');
-      if(loginInfos !== null) login(loginInfos);
-      else errCB();
-    } catch(error)
-    {
-      console.error(error);
-      console.info("Automatic not enabled ...");
-      errCB();
-    }
+  /**
+   * Fonction a utiliser s'il on veut faire des préparations avant le render
+   * NOTE: react-native recommande constructor au lieu de componentWillMount
+   * mais dans l'effet les 2 sont appelés
+   */
+
+  automaticLogin(errCB) {
+    var login = null;
+    var password = null;
+    var token = null;
+
+    var sub_fct = this.submit;
+
+    AsyncStorage.getItem(STORAGE_KEYS.STORED_LOGIN).then((stored_login) => {
+      if(stored_login) login = stored_login;
+
+      return AsyncStorage.getItem(STORAGE_KEYS.STORED_PASSWORD);
+    })
+    .then((stored_pass) => {
+
+      if(stored_pass) password = stored_pass;
+
+      return AsyncStorage.getItem(STORAGE_KEYS.STORED_TOKEN);
+    })
+    .then((stored_token) => {
+      if(stored_token) token = stored_token;
+      return (login && password) ? sub_fct(login, password, token, errCB) : errCB();
+    }).catch((error) => { console.log(error); });
   }
 
-  async login(infos) {
+  submit(login, password, token, errCB) {
+    token = token || ""; // Just in case
+
     var req = {
-      method: 'POST',
+      method: "POST",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(infos)
+      body: JSON.stringify({ "log": login, "pass": password, "token": token })
     };
 
-    try
-    {
-      let response = await fetch('http://fallon.16mb.com/Fallon/webservices/connexion.php', req);
-      let data = await response.json();
+    return fetch('http://fallon.16mb.com/Fallon/webservices/connexion.php', req)
+    .then((res) => {
 
-      if(data.hasOwnProperty("session"))
-        this.props.navigator.push({ name: "test" });
-    }
-    catch(error)
-    {
-      console.error(error);
-    }
+      // Success case !!!
+      if(res.status === 200) return res.json().then((data) => {
+        _navigator.push({ name: "dashboard", group: data.group });
+      });
+
+      // Error case ...
+      if(res.status() === 500) return res.json().then((data) => { errCB(); });
+
+      // Unknown case ?!
+      else errCB();
+    });
   }
-
   render() {
     return (
       <View style={ styles.container }>

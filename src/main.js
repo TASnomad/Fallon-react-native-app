@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  BackAndroid,
   Navigator,
   StyleSheet
 } from 'react-native';
@@ -19,6 +20,17 @@ const ROUTES = {
   dashboard: dashboard
 };
 
+var _navigator;
+
+BackAndroid.addEventListener('hardwareBackPress', () => {
+  if(_navigator && _navigator.getCurrentRoutes().length > 1)
+  {
+    _navigator.pop();
+    return true;
+  }
+  else return false;
+});
+
 export default class Main extends Component {
 
   // La classe du Main n'a pour le moment besoin d'autre chose
@@ -28,6 +40,7 @@ export default class Main extends Component {
 
   // Handler assez propre pour gérer toute les routes
   navRenderScene(route, navigator) {
+    _navigator = navigator;
     var Component = ROUTES[route.name];
     return <Component route={ route } navigator={ navigator } />;
   }
