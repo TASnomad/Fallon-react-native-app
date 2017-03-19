@@ -45,6 +45,8 @@ const styles = StyleSheet.create({
   }
 });
 
+var _navigator = null;
+
 /**
  * TODO: add automatic login if enabled
  */
@@ -53,19 +55,12 @@ export default class Bootsplash extends Component {
 
   constructor(props) {
     super(props);
-  }
 
-  /**
-   * Fonction a utiliser s'il on veut faire des préparations avant le render
-   * NOTE: react-native recommande constructor au lieu de componentWillMount
-   * mais dans l'effet les 2 sont appelés
-   */
-  componentWillMount() {
-    var nav = this.props.navigator;
+    _navigator = this.props.navigator;
 
     this.automaticLogin(() => {
       setTimeout(() => {
-        nav.push({
+        _navigator.push({
           name: 'login',
           token: gcmToken
         });
@@ -73,10 +68,18 @@ export default class Bootsplash extends Component {
     });
   }
 
+  /**
+   * Fonction a utiliser s'il on veut faire des préparations avant le render
+   * NOTE: react-native recommande constructor au lieu de componentWillMount
+   * mais dans l'effet les 2 sont appelés
+   */
+
   automaticLogin(errCB) {
     var login = null;
     var password = null;
     var token = null;
+
+    var sub_fct = this.submit;
 
     AsyncStorage.getItem(STORAGE_KEYS.STORED_LOGIN).then((stored_login) => {
       if(stored_login) login = stored_login;
@@ -88,11 +91,11 @@ export default class Bootsplash extends Component {
       if(stored_pass) password = stored_pass;
 
       return AsyncStorage.getItem(STORAGE_KEYS.STORED_TOKEN);
-    });
+    })
     .then((stored_token) => {
       if(stored_token) token = stored_token;
-      return (login && password) ? submit(login, password, token, errCB) : errCB();
-    });
+      return (login && password) ? sub_fct(login, password, token, errCB) : errCB();
+    }).catch((error) => { console.log(error); });
   }
 
   submit(login, password, token, errCB) {
@@ -104,19 +107,21 @@ export default class Bootsplash extends Component {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ "log": login, "pass": password, "token": token });
+      body: JSON.stringify({ "log": login, "pass": password, "token": token })
     };
 
     return fetch('http://fallon.16mb.com/Fallon/webservices/connexion.php', req)
     .then((res) => {
+
+      // Success case !!!
       if(res.status === 200) return res.json().then((data) => {
-        this.props.navigator.push({ name: "dashboard", group: data.group });
+        _navigator.push({ name: "dashboard", group: data.group });
       });
 
-      if(res.status() === 500) return res.json().then(data) => {
-        errCB();
-      });
+      // Error case ...
+      if(res.status() === 500) return res.json().then((data) => { errCB(); });
 
+      // Unknown case ?!
       else errCB();
     });
   }
