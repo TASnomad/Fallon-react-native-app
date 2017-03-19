@@ -8,7 +8,7 @@ import {
 import bootsplash from './pages/bootsplash';
 import login from './pages/login';
 // import test from './pages/test';
-import dashboard from './pages/Dashboard';
+import dashboard from './pages/dashboard';
 
 var styles = StyleSheet.create({ container: { flex: 1 } });
 

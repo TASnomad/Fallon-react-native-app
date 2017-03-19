@@ -1,18 +1,29 @@
 import React, { Component } from 'react';
 import {
   AsyncStorage,
+  Dimensions,
   Image,
-  Button,
-  Text,
   ScrollView,
-  TouchableHighlight,
-  TouchableOpacity,
   StyleSheet,
-  TextInput,
-  View
+  View,
 } from 'react-native';
 
-import PROMOS from '../utils/promo.js';
+import PROMOS from '../utils/promo';
+
+const styles = StyleSheet.create({
+
+  container: {
+      flex: 1,
+      flexDirection: "row",
+      alignItems: "stretch"
+  },
+
+  img: {
+    flex: 1,
+    width: 300,
+    height: 350,
+  },
+});
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -63,9 +74,6 @@ export default class Dashboard extends Component {
       week += 1;
     }
 
-    console.log(dayOfWeek)
-    console.log(week);
-
     let obj = {
       day: dayOfWeek,
       week: week,
@@ -77,11 +85,14 @@ export default class Dashboard extends Component {
 
   render() {
     return(
-      <View>
-        <Image
-         style={{width: 450, height: 500}}
-         source={{ uri: this.state.url }}/>
+      <View style={ styles.container }>
+      <Image
+        resizeMode="cover"
+        source={{ uri: this.state.url }}
+        style={ styles.img } />
       </View>
     );
   }
 }
+
+/**/
