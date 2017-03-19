@@ -91,7 +91,7 @@ export default class Bootsplash extends Component {
     });
     .then((stored_token) => {
       if(stored_token) token = stored_token;
-      return submit(login, password, token, errCB);
+      return (login && password) ? submit(login, password, token, errCB) : errCB();
     });
   }
 
