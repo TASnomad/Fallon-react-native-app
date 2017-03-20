@@ -52,11 +52,10 @@ export default class SideBar extends Component {
   constructor(props) {
     super(props);
 
-    console.log(props.navigator);
-
     this.state = {
       isOpen: false,
       seletectItem: 'Settings',
+      nom: this.props.nom,
       group: this.props.group,
       nav: this.props.navigator,
     };
@@ -79,13 +78,14 @@ export default class SideBar extends Component {
       selectedItem: item,
     });
 
-    this.props.navigator.push({ name: item.toLowerCase() });
+    this.props.navigator.push({ name: item.toLowerCase(), group: this.state.group, nom: this.state.nom });
   }
 
   render() {
-    const menu = <Menu group={ this.props.group } onItemSelected={ this.onMenuItemSelected } />;
+    const menu = <Menu nom={ this.props.nom.toUpperCase() } group={ this.props.group.toUpperCase() } onItemSelected={ this.onMenuItemSelected } />;
     return (
       <SideMenu
+        menuPosition={ "left" }
         menu={ menu }
         isOpen={ this.state.isOpen }
         onChange={ (isOpen) => this.udpateMenuState(isOpen) }>

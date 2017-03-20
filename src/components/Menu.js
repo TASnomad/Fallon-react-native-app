@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   avatarContainer: {
     marginBottom: 20,
     marginTop: 20,
+    paddingBottom: 20,
     backgroundColor: '#01579B',
     borderBottomColor: '#FFFFFF',
     borderBottomWidth: 5,
@@ -35,19 +36,35 @@ const styles = StyleSheet.create({
   },
 
   selectionContainer: {
-      flex: 2,
-      backgroundColor: "#FFFFFF"
+      flex: 1,
+      // backgroundColor: "#FFFFFF",
+      paddingTop: 15,
   },
 
   name: {
     position: 'absolute',
     left: 50,
     top: 20,
+    color: "#FFFFFF",
+    fontSize: 20
   },
+
+  group: {
+    position: "absolute",
+    left: 175,
+    top: 25,
+    color: "#FFFFFF",
+    fontSize: 15
+  },
+
   item: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
     fontSize: 14,
     fontWeight: '300',
-    paddingTop: 5,
+    paddingBottom: 15,
+    color: "#FFFFFF",
   },
 });
 
@@ -63,10 +80,18 @@ export default class Menu extends Component {
           <Image
             style={ styles.avatar }
             source={ { uri, } } />
-            <Text style={ styles.name }> { this.props.group } </Text>
+            <Text style={ styles.name }> { this.props.nom } </Text>
+            <Text style={ styles.group }> { this.props.group } </Text>
         </View>
 
         <View style={ styles.selectionContainer }>
+
+        <Text
+          onPress={ () => { this.props.onItemSelected('Dashboard') } }
+          style={ styles.item }>
+            Dashboard
+        </Text>
+
           <Text
             onPress={ () => { this.props.onItemSelected('Settings') } }
             style={ styles.item }>

@@ -15,7 +15,7 @@ import PROMOS from '../utils/promo';
 const styles = StyleSheet.create({
 
   container: {
-      flex: 1,
+      flex: 2,
       flexDirection: "row",
       alignItems: "stretch"
   },
@@ -32,6 +32,8 @@ export default class Dashboard extends Component {
     super(props);
 
     var grp = props.route.group;
+    var nom = props.route.nom;
+    console.log(nom);
 
     let update = this.calculateDate(grp);
 
@@ -39,8 +41,11 @@ export default class Dashboard extends Component {
       dayOfWeek: update.day,
       weekNumber: update.week,
       group: grp,
-      url: update.url
+      nom: nom,
+      url: update.url,
     };
+
+
   }
 
   calculateDate(grp) {
@@ -85,7 +90,7 @@ export default class Dashboard extends Component {
 
   render() {
     return(
-      <SideBar group={ this.state.group } navigator={ this.props.navigator }>
+      <SideBar group={ this.state.group } nom={ this.state.nom } navigator={ this.props.navigator }>
         <Image
           resizeMode="cover"
           source={{ uri: this.state.url }}

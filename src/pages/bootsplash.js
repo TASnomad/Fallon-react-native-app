@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#FFFFFF'
   }
 });
 
@@ -115,7 +114,7 @@ export default class Bootsplash extends Component {
 
       // Success case !!!
       if(res.status === 200) return res.json().then((data) => {
-        _navigator.push({ name: "dashboard", group: data.group });
+        _navigator.push({ name: "dashboard", group: data.group, nom: data.nom });
       });
 
       // Error case ...

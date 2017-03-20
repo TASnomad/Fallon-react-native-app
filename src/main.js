@@ -44,6 +44,7 @@ export default class Main extends Component {
   // Handler assez propre pour gérer toute les routes
   navRenderScene(route, navigator) {
     _navigator = navigator;
+    console.log(route.name);
     var Component = ROUTES[route.name];
     return <Component route={ route } navigator={ navigator } />;
   }

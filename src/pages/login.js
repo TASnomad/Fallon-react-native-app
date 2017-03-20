@@ -151,7 +151,7 @@ export default class Login extends Component {
             AsyncStorage.setItem(STORAGE_KEYS.STORED_LOGIN, this.state.login, () => {
               AsyncStorage.setItem(STORAGE_KEYS.STORED_PASSWORD, this.state.password, () => {
                 AsyncStorage.setItem(STORAGE_KEYS.STORED_TOKEN, this.state.gcmToken, () => {
-                  this.props.navigator.push({ name: "dashboard", group: data.group });
+                  this.props.navigator.push({ name: "dashboard", group: data.group, nom: data.nom });
                 });
               });
             });
