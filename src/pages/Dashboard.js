@@ -8,6 +8,8 @@ import {
   View,
 } from 'react-native';
 
+import SideBar from '../components/SideBar';
+
 import PROMOS from '../utils/promo';
 
 const styles = StyleSheet.create({
@@ -39,8 +41,6 @@ export default class Dashboard extends Component {
       group: grp,
       url: update.url
     };
-
-    console.log(this.state.url);
   }
 
   calculateDate(grp) {
@@ -85,14 +85,12 @@ export default class Dashboard extends Component {
 
   render() {
     return(
-      <View style={ styles.container }>
-      <Image
-        resizeMode="cover"
-        source={{ uri: this.state.url }}
-        style={ styles.img } />
-      </View>
+      <SideBar group={ this.state.group } navigation={ this.props.navigator }>
+        <Image
+          resizeMode="cover"
+          source={{ uri: this.state.url }}
+          style={ styles.img } />
+      </SideBar>
     );
   }
 }
-
-/**/

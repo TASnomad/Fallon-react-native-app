@@ -9,6 +9,7 @@ import bootsplash from './pages/bootsplash';
 import login from './pages/login';
 // import test from './pages/test';
 import dashboard from './pages/dashboard';
+import settings from './pages/settings';
 
 var styles = StyleSheet.create({ container: { flex: 1 } });
 
@@ -17,7 +18,8 @@ const ROUTES = {
   bootsplash: bootsplash,
   login: login,
   // test: test,
-  dashboard: dashboard
+  dashboard: dashboard,
+  settings: settings,
 };
 
 var _navigator;
@@ -25,6 +27,9 @@ var _navigator;
 BackAndroid.addEventListener('hardwareBackPress', () => {
   if(_navigator && _navigator.getCurrentRoutes().length > 1)
   {
+    if(_navigator.route.name === "bootsplash" || _navigator.route.name === "login")
+      return false;
+
     _navigator.pop();
     return true;
   }
