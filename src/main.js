@@ -25,11 +25,9 @@ const ROUTES = {
 var _navigator;
 
 BackAndroid.addEventListener('hardwareBackPress', () => {
+
   if(_navigator && _navigator.getCurrentRoutes().length > 1)
   {
-    if(_navigator.route.name === "bootsplash" || _navigator.route.name === "login")
-      return false;
-
     _navigator.pop();
     return true;
   }

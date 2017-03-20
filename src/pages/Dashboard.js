@@ -85,7 +85,7 @@ export default class Dashboard extends Component {
 
   render() {
     return(
-      <SideBar group={ this.state.group } navigation={ this.props.navigator }>
+      <SideBar group={ this.state.group } navigator={ this.props.navigator }>
         <Image
           resizeMode="cover"
           source={{ uri: this.state.url }}

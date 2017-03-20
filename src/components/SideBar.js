@@ -48,12 +48,20 @@ class Button extends Component {
 }
 
 export default class SideBar extends Component {
-  state = {
-    isOpen: false,
-    seletectItem: 'Settings',
-    group: this.props.group,
-    nav: this.props.navigation,
-  };
+
+  constructor(props) {
+    super(props);
+
+    console.log(props.navigator);
+
+    this.state = {
+      isOpen: false,
+      seletectItem: 'Settings',
+      group: this.props.group,
+      nav: this.props.navigator,
+    };
+  }
+
 
   toggle() {
     this.setState({
@@ -66,14 +74,12 @@ export default class SideBar extends Component {
   }
 
   onMenuItemSelected = (item) => {
-    console.log("Nav : " + this.props.navigation);
-    console.log(item.toLowerCase());
     this.setState({
       isOpen: false,
       selectedItem: item,
     });
 
-    this.props.navigation.push({ name: item.toLowerCase() });
+    this.props.navigator.push({ name: item.toLowerCase() });
   }
 
   render() {
