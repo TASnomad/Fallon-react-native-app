@@ -175,13 +175,17 @@ export default class Login extends Component {
         <View style={ styles.loginContainer}>
             <TextInput
               placeholder = 'Entre ton login'
+              returnKeyTpe={ 'next' }
               style = {styles.input}
               multiline={ false }
               underlineColorAndroid = { 'transparent' }
-              onChangeText={ (text) => { this.setState({ login: text }) } } />
+              onChangeText={ (text) => { this.setState({ login: text }) } }
+              onSubmitEditing={ (event) => { this.refs.mdp.focus(); } }/>
 
             <TextInput
+              ref='mdp'
               placeholder='Mot de passe'
+              multiline={ false }
               secureTextEntry={ true }
               style = { styles.input }
               underlineColorAndroid = { 'transparent' }
