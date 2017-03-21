@@ -7,6 +7,7 @@ import {
   StyleSheet,
   View,
   Text,
+  RefreshControl,
 } from 'react-native';
 
 const window = Dimensions.get('window');
@@ -67,7 +68,15 @@ export default class Dashboard extends Component {
       nom: nom,
       url: update.url,
       date: update.date,
+      refresh: false,
     };
+  }
+
+  refreshController()
+  {
+    this.setState({ refresh: true });
+    this.calculateCustomDate(toPickerFormat(new Date()));
+    this.setState({ refresh: false });
   }
 
   calculateCustomDate(dateStr)
@@ -90,8 +99,6 @@ export default class Dashboard extends Component {
         dayOfWeek = 1;
         week += 1;
       }
-
-      console.log('http://www.iut-fbleau.fr/EDT/consulter/EDT/'+ week.toString() + '-' + dayOfWeek.toString() + '-' + PROMOS[this.state.group] + '.gif');
 
       this.setState({
         date: dateStr,
@@ -145,7 +152,18 @@ export default class Dashboard extends Component {
   render() {
     return(
       <SideBar group={ this.state.group } nom={ this.state.nom } navigator={ this.props.navigator }>
-      <ScrollView style={ styles.container }>
+      <ScrollView style={ styles.container }
+        refreshControl={
+            <RefreshControl
+              refreshing={ this.state.refresh }
+              onRefresh={ this.refreshController.bind(this) }
+              tintColor="#ff0000"
+              title="Loading..."
+              titleColor="#00ff00"
+              colors={['#2196F3', '#FFFFFF', '#F44336']}
+              progressBackgroundColor="#69F0AE"
+              />
+        }>
         <Text style={ styles.welcome }> Bonjour { this.state.nom.toUpperCase() } ! </Text>
         <Text style={ styles.text }> Voici ton emploi du temps pour aujourd'hui</Text>
         <DatePicker
