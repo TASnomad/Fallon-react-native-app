@@ -8,22 +8,25 @@ import {
   View,
 } from 'react-native';
 
-import SideBar from '../components/SideBar';
+const window = Dimensions.get('window');
 
+import SideBar from '../components/SideBar';
 import PROMOS from '../utils/promo';
 
 const styles = StyleSheet.create({
 
   container: {
       flex: 2,
-      flexDirection: "row",
-      alignItems: "stretch"
+      width: window.width,
+      height: window.height,
+      marginLeft: 100,
+      backgroundColor: 'red',
   },
 
   img: {
     flex: 1,
-    width: 300,
-    height: 350,
+    width: window.width,
+    height: window.height / 2,
   },
 });
 
@@ -33,7 +36,6 @@ export default class Dashboard extends Component {
 
     var grp = props.route.group;
     var nom = props.route.nom;
-    console.log(nom);
 
     let update = this.calculateDate(grp);
 
@@ -91,10 +93,12 @@ export default class Dashboard extends Component {
   render() {
     return(
       <SideBar group={ this.state.group } nom={ this.state.nom } navigator={ this.props.navigator }>
+      <ScrollView style={ styles.container }>
         <Image
-          resizeMode="cover"
-          source={{ uri: this.state.url }}
-          style={ styles.img } />
+        resizeMode="cover"
+        source={{ uri: this.state.url }}
+        style={ styles.img } />
+      </ScrollView>
       </SideBar>
     );
   }

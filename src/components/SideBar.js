@@ -18,6 +18,14 @@ const styles = StyleSheet.create({
     top: 0,
     padding: 10,
   },
+
+  appName: {
+    fontSize: 35,
+    paddingBottom: 9,
+    paddingTop: 5,
+    color: '#4CAF50',
+  },
+
   caption: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -89,7 +97,14 @@ export default class SideBar extends Component {
         menu={ menu }
         isOpen={ this.state.isOpen }
         onChange={ (isOpen) => this.udpateMenuState(isOpen) }>
+        <View>
+        </View>
         <View style={ styles.container }>
+          <View>
+            <Text style={ styles.appName }>
+              fal!on
+            </Text>
+          </View>
           { this.props.children }
         </View>
           <Button

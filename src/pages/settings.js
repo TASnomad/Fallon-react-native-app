@@ -1,10 +1,24 @@
 import React, { Component } from "react";
 
 import {
+  Dimensions,
   Text,
+  ScrollView,
+  StyleSheet,
 } from "react-native";
 
+const window = Dimensions.get('window');
+
 import SideBar from '../components/SideBar';
+
+const styles = StyleSheet.create({
+  cont: {
+    backgroundColor: 'red',
+    marginLeft: 100,
+    width: window.width,
+    height: window.height,
+  }
+});
 
 export default class Settings extends Component {
 
@@ -21,7 +35,12 @@ export default class Settings extends Component {
   render() {
       return(
         <SideBar group={ this.state.group } nom={ this.state.nom } navigator={ this.props.navigator }>
-          <Text>This is a test !</Text>
+          <ScrollView style={ styles.cont }>
+            <Text>dqsdfqfds
+            </Text>
+            <Text>cdqsfcwdvsf
+            </Text>
+          </ScrollView>
         </SideBar>
       );
   }
