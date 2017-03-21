@@ -77,6 +77,7 @@ export default class Bootsplash extends Component {
     var login = null;
     var password = null;
     var token = null;
+    var autolog = null;
 
     var sub_fct = this.submit;
 
@@ -93,7 +94,14 @@ export default class Bootsplash extends Component {
     })
     .then((stored_token) => {
       if(stored_token) token = stored_token;
-      return (login && password) ? sub_fct(login, password, token, errCB) : errCB();
+
+      return AsyncStorage.getItem(STORAGE_KEYS.STORED_AUTOLOG);
+    })
+    .then((stored_autolog) => {
+
+      (stored_autolog) ? autolog = true : false;
+
+      return (login && password && autolog) ? sub_fct(login, password, token, errCB) : errCB();
     }).catch((error) => { console.log(error); });
   }
 

@@ -13,8 +13,7 @@ import SideBar from '../components/SideBar';
 
 const styles = StyleSheet.create({
   cont: {
-    backgroundColor: 'red',
-    // marginLeft: 100,
+    backgroundColor: '#FFFFFF',
     width: window.width,
     height: window.height,
   }
