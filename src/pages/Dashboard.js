@@ -6,9 +6,12 @@ import {
   ScrollView,
   StyleSheet,
   View,
+  Text,
 } from 'react-native';
 
 const window = Dimensions.get('window');
+
+import DatePicker from 'react-native-datepicker';
 
 import SideBar from '../components/SideBar';
 import PROMOS from '../utils/promo';
@@ -19,8 +22,8 @@ const styles = StyleSheet.create({
       flex: 2,
       width: window.width,
       height: window.height,
-      marginLeft: 100,
-      backgroundColor: 'red',
+      // marginLeft: 100,
+      // backgroundColor: 'red',
   },
 
   img: {
@@ -28,7 +31,24 @@ const styles = StyleSheet.create({
     width: window.width,
     height: window.height / 2,
   },
+
+  welcome: {
+    alignSelf: "center",
+    fontSize: 20,
+  },
+
+  text: {
+    alignSelf: "center",
+    fontSize: 16,
+    marginBottom: 10,
+  },
+
 });
+
+var toPickerFormat = (date) => {
+  return date.toLocaleDateString().split("/").reverse().join("-");
+
+};
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -40,14 +60,45 @@ export default class Dashboard extends Component {
     let update = this.calculateDate(grp);
 
     this.state = {
+
       dayOfWeek: update.day,
       weekNumber: update.week,
       group: grp,
       nom: nom,
       url: update.url,
+      date: update.date,
     };
+  }
 
+  calculateCustomDate(dateStr)
+  {
+    let date = new Date(dateStr);
+    date.setHours(0, 0, 0, 0);
 
+    let onejan = new Date(date.getFullYear(), 0, 1);
+    let week = Math.ceil( (((date - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+
+    week += 18;
+
+    let dayOfWeek = date.getDay();
+
+    if(dayOfWeek === 0)
+      dayOfWeek = 1;
+
+      else if(dayOfWeek === 6)
+      {
+        dayOfWeek = 1;
+        week += 1;
+      }
+
+      console.log('http://www.iut-fbleau.fr/EDT/consulter/EDT/'+ week.toString() + '-' + dayOfWeek.toString() + '-' + PROMOS[this.state.group] + '.gif');
+
+      this.setState({
+        date: dateStr,
+        day: dayOfWeek,
+        week: week,
+        url: 'http://www.iut-fbleau.fr/EDT/consulter/EDT/'+ week.toString() + '-' + dayOfWeek.toString() + '-' + PROMOS[this.state.group] + '.gif',
+      });
   }
 
   calculateDate(grp) {
@@ -82,9 +133,10 @@ export default class Dashboard extends Component {
     }
 
     let obj = {
+      date: toPickerFormat(now),
       day: dayOfWeek,
       week: week,
-      url: 'http://www.iut-fbleau.fr/EDT/consulter/EDT/'+ week.toString() + '-' + dayOfWeek.toString() + '-' + PROMOS[grp] + '.gif'
+      url: 'http://www.iut-fbleau.fr/EDT/consulter/EDT/'+ week.toString() + '-' + dayOfWeek.toString() + '-' + PROMOS[grp] + '.gif',
     }
 
     return obj;
@@ -94,6 +146,19 @@ export default class Dashboard extends Component {
     return(
       <SideBar group={ this.state.group } nom={ this.state.nom } navigator={ this.props.navigator }>
       <ScrollView style={ styles.container }>
+        <Text style={ styles.welcome }> Bonjour { this.state.nom.toUpperCase() } ! </Text>
+        <Text style={ styles.text }> Voici ton emploi du temps pour aujourd'hui</Text>
+        <DatePicker
+          date={ this.state.date }
+          mode="date"
+          placeholder="Choisir une date"
+          format="YYYY-MM-DD"
+          minDate="2016-01-01"
+          maxDate="2020-01-01"
+          confirmBtnText="Changer"
+          cancelBtnText="Annuler"
+          onDateChange={ (date) => { this.calculateCustomDate(date); } }
+          style={ { alignSelf: "center", marginBottom: 10 } }/>
         <Image
         resizeMode="cover"
         source={{ uri: this.state.url }}
