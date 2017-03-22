@@ -7,7 +7,6 @@ import {
 
 import bootsplash from './pages/bootsplash';
 import login from './pages/login';
-// import test from './pages/test';
 import dashboard from './pages/dashboard';
 import settings from './pages/settings';
 
@@ -17,7 +16,6 @@ var styles = StyleSheet.create({ container: { flex: 1 } });
 const ROUTES = {
   bootsplash: bootsplash,
   login: login,
-  // test: test,
   dashboard: dashboard,
   settings: settings,
 };
@@ -36,17 +34,13 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
 
 export default class Main extends Component {
 
-  // La classe du Main n'a pour le moment besoin d'autre chose
   constructor(props) {
     super(props);
   }
 
-  // Handler assez propre pour gérer toute les routes
   navRenderScene(route, navigator) {
+
     _navigator = navigator;
-
-    console.log(route);
-
     var Component = ROUTES[route.name];
     return <Component route={ route } navigator={ navigator } />;
   }

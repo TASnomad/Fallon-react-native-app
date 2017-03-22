@@ -15,16 +15,10 @@ const uri = 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png';
 
 const styles = StyleSheet.create({
   menu: {
-    // flex: 1,
-    // width: window.width,
     height: window.height,
     backgroundColor: '#4CAF50',
-    // marginBottom: 20,
   },
   avatarContainer: {
-    // marginBottom: 20,
-    // marginTop: 20,
-    // paddingBottom: 20,
     alignItems: "center",
     flexDirection: 'row',
     backgroundColor: '#4CAF50',
@@ -39,27 +33,18 @@ const styles = StyleSheet.create({
     height: 48,
     borderRadius: 24,
     paddingRight: 15,
-    // flex: 1,
   },
 
   selectionContainer: {
-      // flex: 1,
-      // backgroundColor: "#FFFFFF",
       paddingTop: 15,
   },
 
   name: {
-    // position: 'absolute',
-    // left: 50,
-    // top: 20,
     color: "#FFFFFF",
     fontSize: 20
   },
 
   group: {
-    // position: "absolute",
-    // left: 175,
-    // top: 25,
     color: "#FFFFFF",
     fontSize: 15
   },
