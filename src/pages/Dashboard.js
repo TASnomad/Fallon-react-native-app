@@ -48,7 +48,18 @@ const styles = StyleSheet.create({
 
 var toPickerFormat = (date) => {
   return date.toLocaleDateString().split("/").reverse().join("-");
+};
 
+var formatDate = (date)  => {
+    var d = date,
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
 };
 
 export default class Dashboard extends Component {
@@ -67,7 +78,7 @@ export default class Dashboard extends Component {
       group: grp,
       nom: nom,
       url: update.url,
-      date: update.date,
+      date: formatDate(new Date()),
       refresh: false,
     };
   }
@@ -75,7 +86,7 @@ export default class Dashboard extends Component {
   refreshController()
   {
     this.setState({ refresh: true });
-    this.calculateCustomDate(toPickerFormat(new Date()));
+    this.calculateCustomDate(formatDate(new Date()));
     this.setState({ refresh: false });
   }
 
