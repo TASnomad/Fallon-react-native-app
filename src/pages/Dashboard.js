@@ -23,8 +23,6 @@ const styles = StyleSheet.create({
       flex: 2,
       width: window.width,
       height: window.height,
-      // marginLeft: 100,
-      // backgroundColor: 'red',
   },
 
   img: {

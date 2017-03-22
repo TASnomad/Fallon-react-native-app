@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import {
+  AsyncStorage,
   Image,
   StyleSheet,
   View,
@@ -10,6 +11,7 @@ import {
 
 import SideMenu from "react-native-side-menu";
 
+import STORAGE_KEYS from '../utils/keys';
 import Menu from './Menu';
 
 const styles = StyleSheet.create({
@@ -81,12 +83,19 @@ export default class SideBar extends Component {
   }
 
   onMenuItemSelected = (item) => {
-    this.setState({
-      isOpen: false,
-      selectedItem: item,
-    });
-
-    this.props.navigator.push({ name: item.toLowerCase(), group: this.state.group, nom: this.state.nom });
+    if(item === "Logout")
+    {
+      this.setState({ isOpen: false, selectedItem: "login" });
+      AsyncStorage.removeItem(STORAGE_KEYS.STORED_AUTOLOG).then(() => {
+        this.props.navigator.popToTop();
+        this.props.navigator.replace({ name: "login", token: " " });
+      });
+    }
+    else
+    {
+      this.setState({ isOpen: false, selectedItem: item });
+      this.props.navigator.push({ name: item.toLowerCase(), group: this.state.group, nom: this.state.nom });
+    }
   }
 
   render() {

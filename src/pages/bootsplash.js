@@ -10,7 +10,7 @@ import {
 import Container from '../components/Container';
 import Label from '../components/Label';
 
-import Img from '../res/img/bootsplash2.png';
+import Img from '../res/img/test.png';
 import STORAGE_KEYS from '../utils/keys';
 
 /**
