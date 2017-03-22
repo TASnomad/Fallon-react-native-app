@@ -161,7 +161,7 @@ export default class Login extends Component {
             console.log(e);
           }
       }
-      this.props.navigator.push({ name: "dashboard", group: data.group });
+      this.props.navigator.push({ name: "dashboard", group: data.group, nom: data.nom });
     })
     .catch((error) => { this.handlerLoginError(error.error); });
   }

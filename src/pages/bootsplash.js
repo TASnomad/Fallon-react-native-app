@@ -10,7 +10,7 @@ import {
 import Container from '../components/Container';
 import Label from '../components/Label';
 
-import Img from '../res/img/bootsplash.png';
+import Img from '../res/img/bootsplash2.png';
 import STORAGE_KEYS from '../utils/keys';
 
 /**
@@ -38,7 +38,7 @@ PushNotification.configure({
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: 'transparent',
+    backgroundColor: '#FFFFFF',
     flex: 1,
     justifyContent: 'center',
   }
@@ -99,7 +99,7 @@ export default class Bootsplash extends Component {
     })
     .then((stored_autolog) => {
 
-      (stored_autolog) ? autolog = true : false;
+      (stored_autolog || stored_autolog === "true") ? autolog = true : false;
 
       return (login && password && autolog) ? sub_fct(login, password, token, errCB) : errCB();
     }).catch((error) => { console.log(error); });
