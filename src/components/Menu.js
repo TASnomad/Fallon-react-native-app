@@ -7,6 +7,7 @@ import {
   View,
   Image,
   Text,
+  TouchableOpacity,
 } from 'react-native';
 
 const window = Dimensions.get('window');
@@ -14,57 +15,63 @@ const uri = 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png';
 
 const styles = StyleSheet.create({
   menu: {
-    flex: 1,
-    width: window.width,
+    // flex: 1,
+    // width: window.width,
     height: window.height,
     backgroundColor: '#4CAF50',
-    marginBottom: 20,
+    // marginBottom: 20,
   },
   avatarContainer: {
-    marginBottom: 20,
-    marginTop: 20,
-    paddingBottom: 20,
+    // marginBottom: 20,
+    // marginTop: 20,
+    // paddingBottom: 20,
+    alignItems: "center",
+    flexDirection: 'row',
     backgroundColor: '#4CAF50',
     borderBottomColor: '#FFFFFF',
+    marginBottom: 25,
+    paddingTop: 5,
+    paddingBottom: 5,
     borderBottomWidth: 5,
   },
   avatar: {
     width: 48,
     height: 48,
     borderRadius: 24,
-    flex: 1,
+    paddingRight: 15,
+    // flex: 1,
   },
 
   selectionContainer: {
-      flex: 1,
+      // flex: 1,
       // backgroundColor: "#FFFFFF",
       paddingTop: 15,
   },
 
   name: {
-    position: 'absolute',
-    left: 50,
-    top: 20,
+    // position: 'absolute',
+    // left: 50,
+    // top: 20,
     color: "#FFFFFF",
     fontSize: 20
   },
 
   group: {
-    position: "absolute",
-    left: 175,
-    top: 25,
+    // position: "absolute",
+    // left: 175,
+    // top: 25,
     color: "#FFFFFF",
     fontSize: 15
   },
 
   item: {
-    flex: 1,
     alignItems: "center",
+    textAlign: "center",
     justifyContent: "center",
-    fontSize: 14,
+    fontSize: 20,
+    height: 50,
     fontWeight: '300',
     paddingBottom: 15,
-    paddingRight: 150,
     color: "#FFFFFF",
   },
 });
@@ -76,7 +83,7 @@ export default class Menu extends Component {
 
   render() {
     return (
-      <ScrollView scrollsToTop={ false } style={ styles.menu }>
+      <ScrollView scrollsToTop={ false } contentContainerStyle={ styles.menu }>
         <View style={ styles.avatarContainer }>
           <Image
             style={ styles.avatar }
@@ -87,18 +94,26 @@ export default class Menu extends Component {
 
         <View style={ styles.selectionContainer }>
 
+          <Text
+            onPress={ () => { this.props.onItemSelected('Dashboard') } }
+            style={ styles.item }>
+              Dashboard
+          </Text>
+
         <Text
-          onPress={ () => { this.props.onItemSelected('Dashboard') } }
+          onPress={ () => { this.props.onItemSelected('Settings') } }
           style={ styles.item }>
-            Dashboard
+            Paramètres
+          </Text>
+
+        </View>
+
+        <Text
+          onPress={ () => { this.props.onItemSelected('Logout') } }
+          style={ styles.item }>
+            Se déconnecter
         </Text>
 
-          <Text
-            onPress={ () => { this.props.onItemSelected('Settings') } }
-            style={ styles.item }>
-              Settings
-            </Text>
-        </View>
       </ScrollView>
     );
   }
