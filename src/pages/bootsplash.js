@@ -30,7 +30,7 @@ PushNotification.configure({
   onNotification: function(notification) { console.log("New notification: " + notification); },
 
   // Change if using a new GCM
-  senderID: "571301329457",
+  senderID: "821295313571",
   popInitialNotification: true,
   requestPermissions: true
 });
