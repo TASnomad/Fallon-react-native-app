@@ -109,6 +109,13 @@ export default class Login extends Component {
       btnOpcaity: 1,
     };
 
+    if(this.state.gcmToken === ' ')
+    {
+      AsyncStorage.getItem(STORAGE_KEYS.STORED_TOKEN).then((data) => {
+        this.setState({ gcmToken: data });
+      });
+    }
+
   }
 
   handlerLoginError(msg) {
