@@ -21,20 +21,6 @@ import PushNotification from 'react-native-push-notification';
 
 var gcmToken = null;
 
-PushNotification.configure({
-  onRegister: function(token) {
-    gcmToken =  token.token;
-    console.log("GCM token: " + gcmToken);
-  },
-
-  onNotification: function(notification) { console.log("New notification: " + notification); },
-
-  // Change if using a new GCM
-  senderID: "821295313571",
-  popInitialNotification: true,
-  requestPermissions: true
-});
-
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
@@ -57,14 +43,28 @@ export default class Bootsplash extends Component {
 
     _navigator = this.props.navigator;
 
-    this.automaticLogin(() => {
-      setTimeout(() => {
-        _navigator.push({
-          name: 'login',
-          token: gcmToken
+    PushNotification.configure({
+      onRegister: function(token) {
+        gcmToken =  token.token;
+
+        this.automaticLogin(() => {
+          setTimeout(() => {
+            _navigator.push({
+              name: 'login',
+              token: gcmToken
+            });
+          }, 500);
         });
-      }, 500);
+      },
+
+      onNotification: function(notification) { console.log("New notification: " + notification); },
+
+      // Change if using a new GCM
+      senderID: "821295313571",
+      popInitialNotification: true,
+      requestPermissions: true
     });
+
   }
 
   /**
