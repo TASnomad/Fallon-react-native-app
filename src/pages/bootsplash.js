@@ -41,13 +41,16 @@ export default class Bootsplash extends Component {
   constructor(props) {
     super(props);
 
+    /* fixing this mismatching */
+    var __that__ = this;
+
     _navigator = this.props.navigator;
 
     PushNotification.configure({
       onRegister: function(token) {
         gcmToken =  token.token;
 
-        this.automaticLogin(() => {
+        __that__.automaticLogin(() => {
           setTimeout(() => {
             _navigator.push({
               name: 'login',
