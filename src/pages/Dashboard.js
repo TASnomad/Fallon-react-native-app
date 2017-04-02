@@ -13,9 +13,12 @@ import {
 const window = Dimensions.get('window');
 
 import DatePicker from 'react-native-datepicker';
+import Icon from '../res/img/calendar.png';
 
-import SideBar from '../components/SideBar';
-import PROMOS from '../utils/promo';
+
+import SideBar    from '../components/SideBar';
+import PROMOS     from '../utils/promo';
+import CALENDAR   from '../utils/dashboardUtils';
 
 const styles = StyleSheet.create({
 
@@ -90,18 +93,20 @@ export default class Dashboard extends Component {
 
   calculateCustomDate(dateStr)
   {
+    const ONE_WEEK = 1000 * 60 * 60 * 24 * 7;
     let date = new Date(dateStr);
     date.setHours(0, 0, 0, 0);
 
-    let onejan = new Date(date.getFullYear(), 0, 1);
-    let week = Math.ceil( (((date - onejan) / 86400000) + onejan.getDay() + 1) / 7);
-
-    week += 18;
-
     let dayOfWeek = date.getDay();
+    let schoolBeginning = new Date(CALENDAR.BEGINNIG_CALENDAR);
+    let diff = Math.abs(date.getTime() - schoolBeginning.getTime());
+    let week = Math.round(diff / ONE_WEEK);
 
     if(dayOfWeek === 0)
+    {
       dayOfWeek = 1;
+      week += 1;
+    }
 
       else if(dayOfWeek === 6)
       {
@@ -118,16 +123,16 @@ export default class Dashboard extends Component {
   }
 
   calculateDate(grp) {
+
+    /* Calculating the week count between execution date and the beggining of the year school */
+    const ONE_WEEK = 1000 * 60 * 60 *  24 * 7;
     let now = new Date();
     now.setHours(0, 0, 0, 0);
 
-    let onejan = new Date(now.getFullYear(), 0, 1);
-    let week = Math.ceil( (((now - onejan) / 86400000) + onejan.getDay() + 1) / 7);
-
-    // We had 18 weeks because of the beginning od the school year
-    week += 18;
-
     let dayOfWeek = now.getDay();
+    let schoolBeginning = new Date(CALENDAR.BEGINNIG_CALENDAR); /* Date stored in a configuration file */
+    let diff = Math.abs(now.getTime() - schoolBeginning.getTime());
+    let week = Math.round(diff / ONE_WEEK);
 
     /**
      * Sunday handling case
@@ -135,13 +140,16 @@ export default class Dashboard extends Component {
      * so we don't need to increment the week counter but only set the day to monday
      */
     if(dayOfWeek === 0)
+    {
       dayOfWeek = 1;
+      week += 1;
+    }
 
     /**
-     * Saturday handling case
-     * IDEA: Saturday is the last day of a week in JS for some reasons,
-     * so we need to increment the week counter and set dayOfWeek at 1
-     */
+      * Saturday handling case
+      * IDEA: Saturday is the last day of a week in JS for some reasons,
+      * so we need to increment the week counter and set dayOfWeek at 1
+      */
     else if(dayOfWeek === 6)
     {
       dayOfWeek = 1;
@@ -153,7 +161,7 @@ export default class Dashboard extends Component {
       day: dayOfWeek,
       week: week,
       url: 'http://www.iut-fbleau.fr/EDT/consulter/EDT/'+ week.toString() + '-' + dayOfWeek.toString() + '-' + PROMOS[grp] + '.gif',
-    }
+    };
 
     return obj;
   }
@@ -166,15 +174,15 @@ export default class Dashboard extends Component {
             <RefreshControl
               refreshing={ this.state.refresh }
               onRefresh={ this.refreshController.bind(this) }
-              tintColor="#ff0000"
-              title="Loading..."
-              titleColor="#00ff00"
-              colors={['#2196F3', '#FFFFFF', '#F44336']}
-              progressBackgroundColor="#69F0AE"
+              tintColor="#00FF00"
+              title="Chargement..."
+              titleColor="#FFFFFF"
+              colors={['#000000', '#FFFFFF', '#F44336']}
+              progressBackgroundColor="#FFFFFF"
               />
         }>
         <Text style={ styles.welcome }> Bonjour { this.state.nom.toUpperCase() } ! </Text>
-        <Text style={ styles.text }> Voici ton emploi du temps pour aujourd'hui</Text>
+        <Text style={ styles.text }> Voici l'emploi du temps du jour</Text>
         <DatePicker
           date={ this.state.date }
           mode="date"
@@ -185,7 +193,8 @@ export default class Dashboard extends Component {
           confirmBtnText="Changer"
           cancelBtnText="Annuler"
           onDateChange={ (date) => { this.calculateCustomDate(date); } }
-          style={ { alignSelf: "center", marginBottom: 10 } }/>
+          style={ { alignSelf: "center", marginBottom: 10 } }
+          iconSource={ Icon }/>
         <Image
         resizeMode="cover"
         source={{ uri: this.state.url }}
