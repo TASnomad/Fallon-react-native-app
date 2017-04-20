@@ -46,6 +46,8 @@ export default class Bootsplash extends Component {
 
     _navigator = this.props.navigator;
 
+    console.log(this.props);
+
     PushNotification.configure({
       onRegister: function(token) {
         gcmToken =  token.token;
@@ -54,7 +56,8 @@ export default class Bootsplash extends Component {
           setTimeout(() => {
             _navigator.push({
               name: 'login',
-              token: gcmToken
+              token: gcmToken,
+              navRef: _navigator,
             });
           }, 500);
         });
@@ -126,7 +129,7 @@ export default class Bootsplash extends Component {
       // Success case !!!
       if(res.status === 200) return res.json().then((data) => {
         AsyncStorage.setItem(STORAGE_KEYS.STORED_TOKEN, gcmToken).then(() => {
-          _navigator.push({ name: "dashboard", group: data.group, nom: data.nom });
+          _navigator.push({ name: "dashboard", group: data.group, nom: data.nom, navRef: _navigator });
         });
       });
 

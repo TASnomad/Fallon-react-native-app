@@ -13,8 +13,9 @@ import {
 const window = Dimensions.get('window');
 
 import DatePicker from 'react-native-datepicker';
-import Icon from '../res/img/calendar.png';
+import LightBox from 'react-native-lightbox';
 
+import Icon from '../res/img/calendar.png';
 
 import SideBar    from '../components/SideBar';
 import PROMOS     from '../utils/promo';
@@ -63,17 +64,24 @@ var formatDate = (date)  => {
     return [year, month, day].join('-');
 };
 
+var _navigator = null;
+
 export default class Dashboard extends Component {
   constructor(props) {
     super(props);
+
+    console.log(this.props);
+
+    _navigator = props.route.navRef;
 
     var grp = props.route.group;
     var nom = props.route.nom;
 
     let update = this.calculateDate(grp);
 
-    this.state = {
+    console.log(update);
 
+    this.state = {
       dayOfWeek: update.day,
       weekNumber: update.week,
       group: grp,
@@ -132,7 +140,8 @@ export default class Dashboard extends Component {
     let dayOfWeek = now.getDay();
     let schoolBeginning = new Date(CALENDAR.BEGINNIG_CALENDAR); /* Date stored in a configuration file */
     let diff = Math.abs(now.getTime() - schoolBeginning.getTime());
-    let week = Math.round(diff / ONE_WEEK);
+
+    let week = Math.round(diff / ONE_WEEK) + 1;
 
     /**
      * Sunday handling case
@@ -195,10 +204,10 @@ export default class Dashboard extends Component {
           onDateChange={ (date) => { this.calculateCustomDate(date); } }
           style={ { alignSelf: "center", marginBottom: 10 } }
           iconSource={ Icon }/>
-        <Image
-        resizeMode="cover"
-        source={{ uri: this.state.url }}
-        style={ styles.img } />
+
+          <LightBox navigator={ _navigator }>
+            <Image resizeMode="cover" source={{ uri: this.state.url }} style={ styles.img } />
+          </LightBox>
       </ScrollView>
       </SideBar>
     );

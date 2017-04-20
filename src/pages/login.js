@@ -92,10 +92,14 @@ const styles = StyleSheet.create({
 
 });
 
+var _navigator = null;
+
 export default class Login extends Component {
 
   constructor(props) {
     super(props);
+
+    _navigator = props.navRef;
 
     this.state = {
       login: '',
@@ -159,7 +163,7 @@ export default class Login extends Component {
               AsyncStorage.setItem(STORAGE_KEYS.STORED_PASSWORD, this.state.password, () => {
                 AsyncStorage.setItem(STORAGE_KEYS.STORED_TOKEN, this.state.gcmToken, () => {
                   AsyncStorage.setItem(STORAGE_KEYS.STORED_AUTOLOG, "true", () => {
-                    this.props.navigator.push({ name: "dashboard", group: data.group, nom: data.nom });
+                    this.props.navigator.push({ name: "dashboard", group: data.group, nom: data.nom, navRef: _navigator });
                   });
                 });
               });
