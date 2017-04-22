@@ -64,15 +64,9 @@ var formatDate = (date)  => {
     return [year, month, day].join('-');
 };
 
-var _navigator = null;
-
 export default class Dashboard extends Component {
   constructor(props) {
     super(props);
-
-    console.log(this.props);
-
-    _navigator = props.route.navRef;
 
     var grp = props.route.group;
     var nom = props.route.nom;
@@ -92,15 +86,13 @@ export default class Dashboard extends Component {
     };
   }
 
-  refreshController()
-  {
+  refreshController() {
     this.setState({ refresh: true });
     this.calculateCustomDate(formatDate(new Date()));
     this.setState({ refresh: false });
   }
 
-  calculateCustomDate(dateStr)
-  {
+  calculateCustomDate(dateStr) {
     const ONE_WEEK = 1000 * 60 * 60 * 24 * 7;
     let date = new Date(dateStr);
     date.setHours(0, 0, 0, 0);
@@ -141,7 +133,8 @@ export default class Dashboard extends Component {
     let schoolBeginning = new Date(CALENDAR.BEGINNIG_CALENDAR); /* Date stored in a configuration file */
     let diff = Math.abs(now.getTime() - schoolBeginning.getTime());
 
-    let week = Math.round(diff / ONE_WEEK) + 1;
+    let week = Math.round(diff / ONE_WEEK);
+
 
     /**
      * Sunday handling case
@@ -151,7 +144,7 @@ export default class Dashboard extends Component {
     if(dayOfWeek === 0)
     {
       dayOfWeek = 1;
-      week += 1;
+      week ++;
     }
 
     /**
@@ -162,8 +155,11 @@ export default class Dashboard extends Component {
     else if(dayOfWeek === 6)
     {
       dayOfWeek = 1;
-      week += 1;
+      week ++;
     }
+
+
+    console.log(week);
 
     let obj = {
       date: toPickerFormat(now),
@@ -205,7 +201,7 @@ export default class Dashboard extends Component {
           style={ { alignSelf: "center", marginBottom: 10 } }
           iconSource={ Icon }/>
 
-          <LightBox navigator={ _navigator }>
+          <LightBox>
             <Image resizeMode="cover" source={{ uri: this.state.url }} style={ styles.img } />
           </LightBox>
       </ScrollView>

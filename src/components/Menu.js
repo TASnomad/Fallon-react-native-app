@@ -85,6 +85,12 @@ export default class Menu extends Component {
               Dashboard
           </Text>
 
+          <Text
+            onPress={ () => { this.props.onItemSelected('Flow') } }
+            style={ styles.item }>
+              Informations
+          </Text>
+
         <Text
           onPress={ () => { this.props.onItemSelected('Settings') } }
           style={ styles.item }>

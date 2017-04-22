@@ -9,6 +9,7 @@ import bootsplash from './pages/bootsplash';
 import login from './pages/login';
 import dashboard from './pages/Dashboard';
 import settings from './pages/settings';
+import flow from './pages/flow';
 
 var styles = StyleSheet.create({ container: { flex: 1 } });
 
@@ -18,6 +19,7 @@ const ROUTES = {
   login: login,
   dashboard: dashboard,
   settings: settings,
+  flow: flow,
 };
 
 var _navigator;
