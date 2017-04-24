@@ -36,14 +36,24 @@ const flowSheet = StyleSheet.create({
   flowBlox: {
     flex: 1,
     flexDirection: 'column',
-    borderColor: 'red',
+    backgroundColor: '#F0F0F2',
+    padding: 15,
+    margin: 5,
+    borderRadius: 10,
   },
 
   flowContent: {
     flex: 1,
     flexDirection: 'column',
-    alignItems: 'center',
+    alignSelf: 'center',
     justifyContent: 'center',
+    margin: 5,
+  },
+
+  flowHeader: {
+    flex: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: '#64FFDD'
   }
 
 });
@@ -127,12 +137,16 @@ export default class Flow extends Component {
       chunck.type_imprevu = chunck.type_imprevu.charAt(0).toUpperCase() + chunck.type_imprevu.slice(1);
       return (
         <View key={ index } style={ flowSheet.flowBlox }>
-          <Text>
+          <Text style={ flowSheet.flowHeader }>
             { chunck.type_imprevu }  le { chunck.date_mes }
           </Text>
 
           <Text style={ flowSheet.flowContent }>
             { chunck.nom_prof }
+          </Text>
+
+          <Text style={ flowSheet.flowContent }>
+            { chunck.message }
           </Text>
 
         </View>

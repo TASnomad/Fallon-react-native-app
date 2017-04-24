@@ -82,7 +82,7 @@ export default class Menu extends Component {
           <Text
             onPress={ () => { this.props.onItemSelected('Dashboard') } }
             style={ styles.item }>
-              Dashboard
+              EDT
           </Text>
 
           <Text
