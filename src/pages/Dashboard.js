@@ -95,12 +95,12 @@ export default class Dashboard extends Component {
   calculateCustomDate(dateStr) {
     const ONE_WEEK = 1000 * 60 * 60 * 24 * 7;
     let date = new Date(dateStr);
-    date.setHours(0, 0, 0, 0);
+    // date.setHours(0, 0, 0, 0);
 
     let dayOfWeek = date.getDay();
     let schoolBeginning = new Date(CALENDAR.BEGINNIG_CALENDAR);
-    let diff = Math.abs(date.getTime() - schoolBeginning.getTime());
-    let week = Math.round(diff / ONE_WEEK);
+    let diff = Math.abs(schoolBeginning.getTime() - date.getTime());
+    let week = Math.floor(diff / ONE_WEEK) + 1;
 
     if(dayOfWeek === 0)
     {
@@ -127,13 +127,12 @@ export default class Dashboard extends Component {
     /* Calculating the week count between execution date and the beggining of the year school */
     const ONE_WEEK = 1000 * 60 * 60 *  24 * 7;
     let now = new Date();
-    now.setHours(0, 0, 0, 0);
+    // now.setHours(0, 0, 0, 0);
 
     let dayOfWeek = now.getDay();
     let schoolBeginning = new Date(CALENDAR.BEGINNIG_CALENDAR); /* Date stored in a configuration file */
-    let diff = Math.abs(now.getTime() - schoolBeginning.getTime());
-
-    let week = Math.round(diff / ONE_WEEK);
+    let diff = Math.abs(schoolBeginning.getTime() - now.getTime());
+    let week = Math.floor(diff / ONE_WEEK) + 1;
 
 
     /**
@@ -157,9 +156,6 @@ export default class Dashboard extends Component {
       dayOfWeek = 1;
       week ++;
     }
-
-
-    console.log(week);
 
     let obj = {
       date: toPickerFormat(now),

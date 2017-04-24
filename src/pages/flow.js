@@ -78,17 +78,20 @@ export default class Flow extends Component {
         requestPending: false,
         refresh: false,
       });
-
-      return data.json();
+      console.log(data);
+      if(data.ok)
+        return data.json();
+      else
+        return null;
     }).then((res) => {
-      this.setState({
+      console.log(res);
+      __that__.setState({
         data: res.data,
         asData: true
       });
-
       __that__.forceUpdate();
     }).catch(function(error) {
-      this.setState({
+      __that__.setState({
         data: [],
         asData: false,
         requestPending: false,
@@ -140,8 +143,6 @@ export default class Flow extends Component {
   render() {
 
     let toRender = null;
-
-    console.log(this.state);
 
     (this.state.asData && this.state.data.length !== 0)
       ? toRender = this.renderFlow() : toRender = this.renderEmptyFlow();
