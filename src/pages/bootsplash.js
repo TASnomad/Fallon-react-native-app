@@ -12,6 +12,7 @@ import Label from '../components/Label';
 
 import Img from '../res/img/test.png';
 import STORAGE_KEYS from '../utils/keys';
+import URLS from '../utils/ajaxURL';
 
 /**
  * We could create the token on the main script
@@ -121,7 +122,7 @@ export default class Bootsplash extends Component {
       body: JSON.stringify({ "log": login, "pass": password, "token": token })
     };
 
-    return fetch('http://fallon.16mb.com/Fallon/webservices/connexion.php', req)
+    return fetch(URLS.CONNEXION, req)
     .then((res) => {
 
       // Success case !!!

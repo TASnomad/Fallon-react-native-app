@@ -20,6 +20,7 @@ import Icon from '../res/img/calendar.png';
 import SideBar    from '../components/SideBar';
 import PROMOS     from '../utils/promo';
 import CALENDAR   from '../utils/dashboardUtils';
+import URLS from '../utils/ajaxURL';
 
 const styles = StyleSheet.create({
 
@@ -118,7 +119,7 @@ export default class Dashboard extends Component {
         date: dateStr,
         day: dayOfWeek,
         week: week,
-        url: 'http://www.iut-fbleau.fr/EDT/consulter/EDT/'+ week.toString() + '-' + dayOfWeek.toString() + '-' + PROMOS[this.state.group] + '.gif',
+        url: URLS.EDT + week.toString() + '-' + dayOfWeek.toString() + '-' + PROMOS[this.state.group] + '.gif',
       });
   }
 

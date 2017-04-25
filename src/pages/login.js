@@ -18,6 +18,9 @@ import logo from '../res/img/fallon.png';
 
 import STORAGE_KEYS from '../utils/keys';
 
+import URLS from '../utils/ajaxURL';
+
+
 const styles = StyleSheet.create({
   container: {
       flex: 1,
@@ -143,7 +146,7 @@ export default class Login extends Component {
       body: JSON.stringify({ "log": login, "pass": password, "token": this.state.gcmToken })
     };
 
-    return fetch('http://fallon.16mb.com/Fallon/webservices/connexion.php', req)
+    return fetch(URLS.CONNEXION, req)
     .then((response) => {
       this.setState({ pendingLoginRequest: false });
 

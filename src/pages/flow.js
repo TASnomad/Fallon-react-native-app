@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import SideBar    from '../components/SideBar';
+import URLS from '../utils/ajaxURL';
 
 const flowSheet = StyleSheet.create({
 
@@ -68,7 +69,7 @@ export default class Flow extends Component {
       data: [],
       asData: false,
       requestPending: false,
-      urlToRetrieve: 'http://fallon.16mb.com/Fallon/webservices/flow.php',
+      urlToRetrieve: URLS.FLOW,
       group: __that__.props.route.group,
       nom: __that__.props.route.nom,
       refresh: false,
