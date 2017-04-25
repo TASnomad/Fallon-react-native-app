@@ -2,8 +2,10 @@ import React, { Component, PropTypes } from "react";
 
 import {
   AsyncStorage,
+  Button,
   Dimensions,
   Text,
+  ToastAndroid,
   ScrollView,
   StyleSheet,
   Switch,
@@ -23,6 +25,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     width: window.width,
     height: window.height,
+  },
+
+  bottomAction: {
+    position: 'absolute',
+    bottom: 0,
   }
 });
 
@@ -52,7 +59,21 @@ export default class Settings extends Component {
   }
 
   applySettings() {
-    console.log("Test");
+    var disableAutoLogin = this.state.autologEnabled;
+
+    if(!disableAutoLogin)
+      AsyncStorage.removeItem(STORAGE_KEYS.STORED_AUTOLOG).then(() => {
+        ToastAndroid.show('Les paramètres ont bien été mis à jour !', ToastAndroid.LONG);
+      }).catch((err) => {
+        ToastAndroid.show('Les paramètres n\'ont pas été mis à jour !', ToastAndroid.LONG);
+      });
+
+    if(disableAutoLogin)
+      AsyncStorage.setItem(STORAGE_KEYS.STORED_AUTOLOG, "true").then(() => {
+        ToastAndroid.show('Les paramètres ont bien été mis à jour !', ToastAndroid.LONG);
+      }).catch((err) => {
+        ToastAndroid.show('Les paramètres n\'ont pas été mis à jour !', ToastAndroid.LONG);
+      });
   }
 
   render() {
@@ -74,9 +95,9 @@ export default class Settings extends Component {
               </Switch>
             </SettingRow>
 
-            <SettingRow
-              onPress={ () => { console.log("test 2"); } }>
-              <Text> This is a test 2 ! </Text>
+
+            <SettingRow style={ styles.bottomAction }>
+              <Button title="Appliquer" onPress={ this.applySettings.bind(this) } />
             </SettingRow>
 
           </ScrollView>

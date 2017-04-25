@@ -89,13 +89,11 @@ export default class Flow extends Component {
         requestPending: false,
         refresh: false,
       });
-      console.log(data);
       if(data.ok)
         return data.json();
       else
         return null;
     }).then((res) => {
-      console.log(res);
       __that__.setState({
         data: res.data,
         asData: true
