@@ -14,7 +14,7 @@ Ce projet est constitué des composants suivants:
  # Note importante
  -----------------
 
- Lancement de la béta en grande nature __dans les jours à venir__
+ Lancement de la béta en grandeur nature __dans les jours à venir__
 
  # Note pour les devs
  --------------------
