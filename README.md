@@ -10,8 +10,13 @@ Ce projet est constitué des composants suivants:
 * Une application mobile pour les étudiants, qui a différents composants:
  * Un emploi du temps selon la promotion du compte
  * Un dashboard montrant toutes les informations laissées par l'administration
- 
+
  # Note importante
  -----------------
- 
- Le système de récupération des urls pour l'emploi du temps doit utiliser une date __écrite en dure__
+
+ Lancement de la béta en grande nature __dans les jours à venir__
+
+ # Note pour les devs
+ --------------------
+
+ Développement de la partie iOS légèrement __retardée__
