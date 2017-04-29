@@ -19,4 +19,7 @@ Ce projet est constitué des composants suivants:
  # Note pour les devs
  --------------------
 
- Développement de la partie iOS légèrement __retardée__
+__Développement iOS démarré__
+ * BUGS:
+  * Notifications iOS non implémentée
+  * EDT sur iOS dashboard non affichable 
