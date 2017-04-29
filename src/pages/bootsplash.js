@@ -130,10 +130,8 @@ export default class Bootsplash extends Component {
 
     return fetch(URLS.CONNEXION, req)
     .then((res) => {
-
       // Success case !!!
       if(res.status === 200) return res.json().then((data) => {
-        console.log(data);
         AsyncStorage.setItem(STORAGE_KEYS.STORED_TOKEN, gcmToken).then(() => {
           let t = _navigator;
           _navigator.push({ name: "dashboard", group: data.group, nom: data.nom });

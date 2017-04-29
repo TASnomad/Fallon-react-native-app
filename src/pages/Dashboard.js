@@ -74,8 +74,6 @@ export default class Dashboard extends Component {
 
     let update = this.calculateDate(grp);
 
-    console.log(update);
-
     this.state = {
       dayOfWeek: update.day,
       weekNumber: update.week,

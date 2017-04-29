@@ -18,8 +18,13 @@ Ce projet est constitué des composants suivants:
 
  # Note pour les devs
  --------------------
+__Android :__
+  Ajouts:
+    * Options pour la supression des informations stockées sur le téléphone
+    * Ajout d'une option de modification de la promotion
+
 
 __Développement iOS démarré__
- * BUGS:
+ BUGS:
   * Notifications iOS non implémentée
-  * EDT sur iOS dashboard non affichable 
+  * EDT sur iOS dashboard non affichable
