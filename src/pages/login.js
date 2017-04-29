@@ -4,6 +4,7 @@ import {
   Image,
   Button,
   Text,
+  Picker,
   ScrollView,
   TouchableOpacity,
   StyleSheet,
@@ -17,6 +18,7 @@ import CheckBox from 'react-native-icon-checkbox';
 import logo from '../res/img/fallon.png';
 
 import STORAGE_KEYS from '../utils/keys';
+import PROMOS from '../utils/promo';
 
 import URLS from '../utils/ajaxURL';
 
@@ -114,6 +116,7 @@ export default class Login extends Component {
       remember: false,
       gcmToken: this.props.route.token || '',
       btnOpcaity: 1,
+      selectedItem: '',
     };
 
     if(this.state.gcmToken === ' ')
@@ -123,6 +126,16 @@ export default class Login extends Component {
       });
     }
 
+  }
+
+  renderDropdown() {
+    var items = Object.keys(PROMOS);
+
+    return items.map((key, index) => {
+      return (
+        <Picker.Item label={ PROMOS[key] } key={ index } value={ items[index] }/>
+      );
+    });
   }
 
   handlerLoginError(msg) {
@@ -143,7 +156,7 @@ export default class Login extends Component {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ "log": login, "pass": password, "token": this.state.gcmToken })
+      body: JSON.stringify({ "log": login, "pass": password, "token": this.state.gcmToken, "group": this.state.selectedItem })
     };
 
     return fetch(URLS.CONNEXION, req)
@@ -166,7 +179,9 @@ export default class Login extends Component {
               AsyncStorage.setItem(STORAGE_KEYS.STORED_PASSWORD, this.state.password, () => {
                 AsyncStorage.setItem(STORAGE_KEYS.STORED_TOKEN, this.state.gcmToken, () => {
                   AsyncStorage.setItem(STORAGE_KEYS.STORED_AUTOLOG, "true", () => {
-                    this.props.navigator.push({ name: "dashboard", group: data.group, nom: data.nom, navRef: _navigator });
+                    AsyncStorage.setItem(STORAGE_KEYS.STORED_GROUP, data.group, () => {
+                      this.props.navigator.push({ name: "dashboard", group: data.group, nom: data.nom, navRef: _navigator });
+                    });
                   });
                 });
               });
@@ -204,6 +219,14 @@ export default class Login extends Component {
               style = { styles.input }
               underlineColorAndroid = { 'transparent' }
               onChangeText={ (text) => { this.setState({ password: text }) } } />
+
+            <Picker
+              style={ { width: 300 } }
+              selectedValue={ this.state.selectedItem }
+              onValueChange={ (promo) => { this.setState({ selectedItem: promo }); } }
+              mode="dropdown">
+              { this.renderDropdown() }
+            </Picker>
 
             <TouchableOpacity
               style={[ styles.button, { opacity: this.state.btnOpcaity } ]}

@@ -82,6 +82,7 @@ export default class Bootsplash extends Component {
     var login = null;
     var password = null;
     var token = null;
+    var group = null;
     var autolog = null;
 
     var sub_fct = this.submit;
@@ -106,11 +107,16 @@ export default class Bootsplash extends Component {
 
       (stored_autolog || stored_autolog === "true") ? autolog = true : false;
 
-      return (login && password && autolog) ? sub_fct(login, password, token, errCB) : errCB();
-    }).catch((error) => { console.log(error); });
+      return AsyncStorage.getItem(STORAGE_KEYS.STORED_GROUP);
+    }).then((stored_group) => {
+
+      if(stored_group) group = stored_group;
+
+      return (login && password && group && autolog) ? sub_fct(login, password, token, group, errCB) : errCB();
+    }).catch((error) => { console.dir(error); });
   }
 
-  submit(login, password, token, errCB) {
+  submit(login, password, token, group, errCB) {
     token = token || ""; // Just in case
 
     var req = {
@@ -119,7 +125,7 @@ export default class Bootsplash extends Component {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ "log": login, "pass": password, "token": token })
+      body: JSON.stringify({ "log": login, "pass": password, "token": token, "group": group })
     };
 
     return fetch(URLS.CONNEXION, req)
@@ -127,6 +133,7 @@ export default class Bootsplash extends Component {
 
       // Success case !!!
       if(res.status === 200) return res.json().then((data) => {
+        console.log(data);
         AsyncStorage.setItem(STORAGE_KEYS.STORED_TOKEN, gcmToken).then(() => {
           let t = _navigator;
           _navigator.push({ name: "dashboard", group: data.group, nom: data.nom });
