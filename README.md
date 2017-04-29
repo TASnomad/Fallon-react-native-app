@@ -18,7 +18,7 @@ Ce projet est constitué des composants suivants:
 
  # Note pour les devs
  --------------------
-__Android :__
+__Android__
   Ajouts:
     * Options pour la supression des informations stockées sur le téléphone
     * Ajout d'une option de modification de la promotion
