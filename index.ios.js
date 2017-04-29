@@ -7,6 +7,6 @@
 import React, { Component } from 'react';
 import { AppRegistry } from 'react-native';
 
-import Main from './src/main'
+import iosMain from './src/iosMain'
 
-AppRegistry.registerComponent('Fallon', () => Main);
+AppRegistry.registerComponent('Fallon', () => iosMain);
