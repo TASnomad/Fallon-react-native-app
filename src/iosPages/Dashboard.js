@@ -18,7 +18,7 @@ import LightBox from 'react-native-lightbox';
 
 import Icon from '../res/img/calendar.png';
 
-import SideBar    from '../components/SideBar';
+import SideBarIOS    from '../iosComponents/SideBarIOS';
 import PROMOS     from '../utils/promo';
 import CALENDAR   from '../utils/dashboardUtils';
 import URLS from '../utils/ajaxURL';
@@ -95,7 +95,7 @@ export default class Dashboard extends Component {
 
   render() {
     return (
-      <SideBar group={ this.state.group } nom={ this.state.nom } navigator={ this.props.navigator }>
+      <SideBarIOS group={ this.state.group } nom={ this.state.nom } navigator={ this.props.navigator }>
         <ScrollView style={ styles.container }>
           <Text style={ styles.welcome }>Bonjour { this.state.nom.toUpperCase() } !</Text>
           <Text style={ styles.welcome }>Voici les cours de la journée !</Text>
@@ -109,7 +109,7 @@ export default class Dashboard extends Component {
               <Image resizeMode="cover" source={{ uri: this.state.url }} style={ styles.img } />
             </LightBox>
         </ScrollView>
-      </SideBar>
+      </SideBarIOS>
     );
   }
 }
