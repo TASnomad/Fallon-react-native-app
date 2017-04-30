@@ -84,7 +84,14 @@ export default class Flow extends Component {
 
     this.setState({ requestPending: true });
 
-    fetch(this.state.urlToRetrieve).then((data) => {
+    fetch(this.state.urlToRetrieve, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ group: this.props.route.group })
+    }).then((data) => {
       this.setState({
         requestPending: false,
         refresh: false,

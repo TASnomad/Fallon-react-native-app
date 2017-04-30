@@ -93,7 +93,6 @@ export default class Bootsplash extends Component {
       return AsyncStorage.getItem(STORAGE_KEYS.STORED_PASSWORD);
     })
     .then((stored_pass) => {
-
       if(stored_pass) password = stored_pass;
 
       return AsyncStorage.getItem(STORAGE_KEYS.STORED_TOKEN);
@@ -104,12 +103,10 @@ export default class Bootsplash extends Component {
       return AsyncStorage.getItem(STORAGE_KEYS.STORED_AUTOLOG);
     })
     .then((stored_autolog) => {
-
       (stored_autolog || stored_autolog === "true") ? autolog = true : false;
 
       return AsyncStorage.getItem(STORAGE_KEYS.STORED_GROUP);
     }).then((stored_group) => {
-
       if(stored_group) group = stored_group;
 
       return (login && password && group && autolog) ? sub_fct(login, password, token, group, errCB) : errCB();

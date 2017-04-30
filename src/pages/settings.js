@@ -4,6 +4,7 @@ import {
   AsyncStorage,
   Button,
   Dimensions,
+  Picker,
   Text,
   ToastAndroid,
   ScrollView,
@@ -17,6 +18,7 @@ import SideBar from '../components/SideBar';
 import SettingRow from '../components/SettingRow';
 
 import STORAGE_KEYS from '../utils/keys';
+import PROMOS from '../utils/promo';
 
 import CheckBox from 'react-native-icon-checkbox';
 
@@ -38,8 +40,7 @@ const AUTOLOG_OFF = "Désactiver";
 
 export default class Settings extends Component {
 
-  constructor(props)
-  {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -48,6 +49,7 @@ export default class Settings extends Component {
       autologEnabled: false,
       autologText: AUTOLOG_OFF,
       settingsApplyed: false,
+      selectedItem: '',
     };
 
     AsyncStorage.getItem(STORAGE_KEYS.STORED_AUTOLOG).then((stored_autolog) => {
@@ -76,6 +78,16 @@ export default class Settings extends Component {
       });
   }
 
+  renderDropdown() {
+    var items = Object.keys(PROMOS);
+
+    return items.map((key, index) => {
+      return (
+        <Picker.Item label={ PROMOS[key] } key={ index } value={ items[index] }/>
+      );
+    });
+  }
+
   render() {
       return(
         <SideBar group={ this.state.group } nom={ this.state.nom } navigator={ this.props.navigator }>
@@ -93,6 +105,18 @@ export default class Settings extends Component {
                 }
                 value={ this.state.autologEnabled }>
               </Switch>
+            </SettingRow>
+
+            <SettingRow
+              onPress={ () => { return false; } }>
+              <Text>Changer de groupe</Text>
+              <Picker
+                style={ { width: 300 } }
+                selectedValue={ this.state.selectedItem }
+                onValueChange={ (promo) => { this.setState({ selectedItem: promo }); } }
+                mode="dropdown">
+                { this.renderDropdown() }
+              </Picker>
             </SettingRow>
 
 
