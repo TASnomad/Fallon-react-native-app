@@ -146,9 +146,6 @@ export default class Bootsplash extends Component {
     return (
       <View style={ styles.container }>
         <Image source={ Img } />
-        <Container>
-          <Text> Projet Fallon </Text>
-        </Container>
       </View>
     );
   }

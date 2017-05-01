@@ -19,6 +19,7 @@ import SettingRow from '../components/SettingRow';
 
 import STORAGE_KEYS from '../utils/keys';
 import PROMOS from '../utils/promo';
+import AJAX from '../utils/ajaxURL';
 
 import CheckBox from 'react-native-icon-checkbox';
 
@@ -61,6 +62,9 @@ export default class Settings extends Component {
   }
 
   applySettings() {
+
+    this.applyPromo();
+
     var disableAutoLogin = this.state.autologEnabled;
 
     if(!disableAutoLogin)
@@ -76,6 +80,34 @@ export default class Settings extends Component {
       }).catch((err) => {
         ToastAndroid.show('Les paramètres n\'ont pas été mis à jour !', ToastAndroid.LONG);
       });
+
+      this.props.navigator.push({ name: 'dashboard', group: this.state.group, nom: this.state.nom, navRef: this.props.navigator });
+  }
+
+  applyPromo() {
+    var chosenPromo = this.state.selectedItem;
+
+    var __self__ = this;
+
+    var req = {
+      method: "PUT",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ "cmd": "U_PROMO", "user": __self__.state.nom , "oldArg": __self__.state.group ,"arg": chosenPromo })
+    };
+
+    fetch(AJAX.UCTL, req).then((res) => {
+      if(res.ok) return res.json();
+    }).then((data) => {
+      __self__.props.route.group = chosenPromo;
+      AsyncStorage.setItem(STORAGE_KEYS.STORED_GROUP, chosenPromo);
+      ToastAndroid.show('Promo mise à jour ! Redémarrer l\'application pour que les options soient prises en comptes !', ToastAndroid.LONG);
+      this.setState({ selectedItem: chosenPromo, group: chosenPromo });
+    }).catch((error) => {
+      ToastAndroid.show(error.error || error.message, ToastAndroid.LONG);
+    });
   }
 
   renderDropdown() {
@@ -111,7 +143,7 @@ export default class Settings extends Component {
               onPress={ () => { return false; } }>
               <Text>Changer de groupe</Text>
               <Picker
-                style={ { width: 300 } }
+                style={ { width: 125 } }
                 selectedValue={ this.state.selectedItem }
                 onValueChange={ (promo) => { this.setState({ selectedItem: promo }); } }
                 mode="dropdown">
