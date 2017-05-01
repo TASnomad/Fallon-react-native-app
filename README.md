@@ -19,9 +19,12 @@ Ce projet est constitué des composants suivants:
  # Note pour les devs
  --------------------
 __Android__
-  Ajouts:
+  * Ajouts:
     * Options pour la supression des informations stockées sur le téléphone
     * Ajout d'une option de modification de la promotion
+  * BUGS:
+    * Les propiétées de navigation ne se modifie pas après de l'appel du webservices uctl cmd U_PROMO
+    * Ce bug est probablement dû au fait que la SideBar ne peut être modifiée, corriger main.js pour récupérer tout les options sauvegardées par l'application 
 
 
 __Développement iOS démarré__
