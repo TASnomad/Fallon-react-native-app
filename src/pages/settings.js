@@ -50,7 +50,7 @@ export default class Settings extends Component {
       autologEnabled: false,
       autologText: AUTOLOG_OFF,
       settingsApplyed: false,
-      selectedItem: '',
+      selectedItem: this.props.route.group,
     };
 
     AsyncStorage.getItem(STORAGE_KEYS.STORED_AUTOLOG).then((stored_autolog) => {
