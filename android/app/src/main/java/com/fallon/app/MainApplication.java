@@ -1,4 +1,4 @@
-package com.fallon;
+package com.fallon.app;
 
 import android.app.Application;
 import android.util.Log;
