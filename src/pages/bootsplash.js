@@ -65,7 +65,7 @@ export default class Bootsplash extends Component {
       onNotification: function(notification) { console.log("New notification: " + notification); },
 
       // Change if using a new GCM
-      senderID: "821295313571",
+      senderID: "562572090701",
       popInitialNotification: true,
       requestPermissions: true
     });
