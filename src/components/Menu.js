@@ -97,6 +97,12 @@ export default class Menu extends Component {
             Paramètres
           </Text>
 
+        <Text
+          onPress={ () => { this.props.onItemSelected('Infos') } }
+          style={ styles.item }>
+          A propos
+        </Text>
+
         </View>
 
         <Text

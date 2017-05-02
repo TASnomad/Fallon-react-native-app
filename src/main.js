@@ -10,6 +10,7 @@ import login from './pages/login';
 import dashboard from './pages/Dashboard';
 import settings from './pages/settings';
 import flow from './pages/flow';
+import infos from './pages/infos';
 
 var styles = StyleSheet.create({ container: { flex: 1 } });
 
@@ -20,6 +21,7 @@ const ROUTES = {
   dashboard: dashboard,
   settings: settings,
   flow: flow,
+  infos: infos,
 };
 
 var _navigator;

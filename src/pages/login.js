@@ -116,7 +116,7 @@ export default class Login extends Component {
       remember: false,
       gcmToken: this.props.route.token || '',
       btnOpcaity: 1,
-      selectedItem: '',
+      selectedItem: "INFO1FI",
     };
 
     if(this.state.gcmToken === ' ')
