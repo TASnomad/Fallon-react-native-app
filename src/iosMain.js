@@ -23,6 +23,15 @@ const ROUTES = {
 
 var _navigator;
 
+console.log(...Navigator);
+
+const noBackSwipe = {
+  ...Navigator.SceneConfigs.HorizontalSwipeJump,
+  gestures: {
+    pop: {},
+  },
+};
+
 export default class iosMain extends Component {
 
   constructor(props) {
@@ -41,7 +50,8 @@ export default class iosMain extends Component {
       <Navigator
         style={ styles.container }
         initialRoute={ { name: 'bootsplash' } }
-        renderScene={ this.navRenderScene } />
+        renderScene={ this.navRenderScene }
+        configureScene={ () => { return noBackSwipe; } }/>
     );
   }
 }
