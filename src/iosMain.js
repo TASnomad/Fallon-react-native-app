@@ -7,8 +7,8 @@ import {
 import bootsplash from './iosPages/iosBootsplash';
 import login from './pages/login';
 import dashboard from './iosPages/Dashboard';
-import settings from './pages/settings';
-import flow from './pages/flow';
+import settings from './iosPages/iosSettings';
+import flow from './iosPages/iosFlow';
 
 var styles = StyleSheet.create({ container: { flex: 1 } });
 

@@ -12,12 +12,12 @@ import {
 import SideMenu from "react-native-side-menu";
 
 import STORAGE_KEYS from '../utils/keys';
-import Menu from '../components/Menu';
+import Menu from '../iosComponents/MenuIOS';
 
 const styles = StyleSheet.create({
   button: {
     position: 'absolute',
-    top: 0,
+    top: 10,
     padding: 10,
   },
 
@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
+    marginTop: 10,
   },
 });
 

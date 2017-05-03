@@ -63,11 +63,12 @@ export default class Dashboard extends Component {
       renderDate: new Date(),
       timeOffset: (-1) * (new Date()).getTimezoneOffset() / 60,
       url: str,
+      refresh: false,
     };
   }
 
-  retrieveDate() {
-    let now = new Date();
+  retrieveDate(date) {
+    let now = (date) ? date : new Date();
     let beginning = new Date(CALENDAR.BEGINNIG_CALENDAR);
 
     let diff = Math.abs(beginning.getTime() - now.getTime());
@@ -90,13 +91,33 @@ export default class Dashboard extends Component {
   }
 
   onChangeDate(date) {
-    console.log("New date: " + date);
+    //console.log("New date: " + date);
+    this.setState({ date: date });
+    this.retrieveDate(date);
+  }
+
+  refreshController() {
+    this.setState({ refresh: true });
+    this.retrieveDate();
+    this.forceUpdate();
+    this.setState({ refresh: false });
   }
 
   render() {
     return (
       <SideBarIOS group={ this.state.group } nom={ this.state.nom } navigator={ this.props.navigator }>
-        <ScrollView style={ styles.container }>
+        <ScrollView style={ styles.container }
+          refreshControl={
+              <RefreshControl
+                refreshing={ this.state.refresh }
+                onRefresh={ this.refreshController.bind(this) }
+                tintColor="#00FF00"
+                title="Chargement..."
+                titleColor="#FFFFFF"
+                colors={['#000000', '#FFFFFF', '#F44336']}
+                progressBackgroundColor="#FFFFFF"
+                />
+          }>
           <Text style={ styles.welcome }>Bonjour { this.state.nom.toUpperCase() } !</Text>
           <Text style={ styles.welcome }>Voici les cours de la journée !</Text>
           <DatePickerIOS
