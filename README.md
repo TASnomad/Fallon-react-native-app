@@ -19,6 +19,22 @@ Phase béta iOS à venir
 
  # Note pour les devs
  --------------------
+
+__Mise en ligne sur les stores__
+ __A modifier__
+  * Android:
+    **AndroidManifest.xml**
+     ```
+      android:versionCode="X", android:versionName="X.Y"
+      ```
+    **build.gradle**
+      ```
+      versionCode X, versionName="X.Y"
+      ```
+  * IOS:
+    *  __A venir ...__
+
+
 __Android__
   * Ajouts:
     * Options pour la supression des informations stockées sur le téléphone
