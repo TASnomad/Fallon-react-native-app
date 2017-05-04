@@ -14,7 +14,8 @@ Ce projet est constitué des composants suivants:
  # Note importante
  -----------------
 
- Lancement de la béta en grandeur nature __dans les jours à venir__
+Phase béta __lancée__ sur le play store: https://play.google.com/store/apps/details?id=com.fallon.app&hl=fr
+Phase béta iOS à venir
 
  # Note pour les devs
  --------------------
