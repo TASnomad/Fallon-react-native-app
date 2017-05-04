@@ -88,7 +88,7 @@ export default class Menu extends Component {
           <Text
             onPress={ () => { this.props.onItemSelected('Flow') } }
             style={ styles.item }>
-              Absences / Retards
+              Absences/Retards des profs
           </Text>
 
         <Text

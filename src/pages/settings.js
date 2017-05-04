@@ -103,7 +103,7 @@ export default class Settings extends Component {
     }).then((data) => {
       __self__.props.route.group = chosenPromo;
       AsyncStorage.setItem(STORAGE_KEYS.STORED_GROUP, chosenPromo);
-      ToastAndroid.show('Promo mise à jour ! Redémarrer l\'application pour que les options soient prises en comptes !', ToastAndroid.LONG);
+      ToastAndroid.show('Redémarrer l\'application pour que les options soient prises en comptes !', ToastAndroid.LONG);
       this.setState({ selectedItem: chosenPromo, group: chosenPromo });
     }).catch((error) => {
       ToastAndroid.show(error.error || error.message, ToastAndroid.LONG);

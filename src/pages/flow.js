@@ -54,7 +54,7 @@ const flowSheet = StyleSheet.create({
   flowHeader: {
     flex: 1,
     borderBottomWidth: 1,
-    borderBottomColor: '#64FFDD'
+    borderBottomColor: '#4CAF50',
   }
 
 });
