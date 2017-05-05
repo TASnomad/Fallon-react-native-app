@@ -36,15 +36,13 @@ __Mise en ligne sur les stores__
 
 
 __Android__
-  * Ajouts:
-    * Options pour la supression des informations stockées sur le téléphone
-    * Ajout d'une option de modification de la promotion
-  * BUGS:
-    * Les propiétées de navigation ne se modifie pas après de l'appel du webservices uctl cmd U_PROMO
-    * Ce bug est probablement dû au fait que la SideBar ne peut être modifiée, corriger main.js pour récupérer tout les options sauvegardées par l'application
+  * Ajout(s):
+    * Ajout d'une section pour récupérer les fichiers mis en libre service pour sa promotion
+  * Modification(s):
+    * Modification / remplacement du module Lightbox
 
 
 __Développement iOS démarré__
- * BUGS:
+ * BUG(S):
   * Notifications iOS non implémentée
   * EDT sur iOS dashboard non affichable

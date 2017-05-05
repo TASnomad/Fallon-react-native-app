@@ -63,30 +63,35 @@ export default class Settings extends Component {
 
   applySettings() {
 
-    this.applyPromo();
+    var switchingPromo = this.applyPromo();
 
-    var disableAutoLogin = this.state.autologEnabled;
+    var __self__ = this;
 
-    if(!disableAutoLogin)
-      AsyncStorage.removeItem(STORAGE_KEYS.STORED_AUTOLOG).then(() => {
-        ToastAndroid.show('Les paramètres ont bien été mis à jour !', ToastAndroid.LONG);
-      }).catch((err) => {
-        ToastAndroid.show('Les paramètres n\'ont pas été mis à jour !', ToastAndroid.LONG);
-      });
+    switchingPromo.then(() => {
+      var disableAutoLogin = this.state.autologEnabled;
 
-    if(disableAutoLogin)
-      AsyncStorage.setItem(STORAGE_KEYS.STORED_AUTOLOG, "true").then(() => {
-        ToastAndroid.show('Les paramètres ont bien été mis à jour !', ToastAndroid.LONG);
-      }).catch((err) => {
-        ToastAndroid.show('Les paramètres n\'ont pas été mis à jour !', ToastAndroid.LONG);
-      });
+      if(!disableAutoLogin)
+        AsyncStorage.removeItem(STORAGE_KEYS.STORED_AUTOLOG).then(() => {
+          // ToastAndroid.show('Les paramètres ont bien été mis à jour !', ToastAndroid.LONG);
+        }).catch((err) => {
+          // ToastAndroid.show('Les paramètres n\'ont pas été mis à jour !', ToastAndroid.LONG);
+        });
 
-      this.props.navigator.push({ name: 'dashboard', group: this.state.group, nom: this.state.nom, navRef: this.props.navigator });
+      if(disableAutoLogin)
+        AsyncStorage.setItem(STORAGE_KEYS.STORED_AUTOLOG, "true").then(() => {
+          // ToastAndroid.show('Les paramètres ont bien été mis à jour !', ToastAndroid.LONG);
+        }).catch((err) => {
+          // ToastAndroid.show('Les paramètres n\'ont pas été mis à jour !', ToastAndroid.LONG);
+        });
+        __self__.props.navigator.push({ name: 'dashboard', group: __self__.state.group, nom: __self__.state.nom, navRef: __self__.props.navigator });
+    }).catch((error) => {
+      console.error(error);
+    });
   }
 
   applyPromo() {
-    var chosenPromo = this.state.selectedItem;
 
+    var chosenPromo = this.state.selectedItem;
     var __self__ = this;
 
     var req = {
@@ -98,16 +103,21 @@ export default class Settings extends Component {
       body: JSON.stringify({ "cmd": "U_PROMO", "user": __self__.state.nom , "oldArg": __self__.state.group ,"arg": chosenPromo })
     };
 
-    fetch(AJAX.UCTL, req).then((res) => {
-      if(res.ok) return res.json();
-    }).then((data) => {
-      __self__.props.route.group = chosenPromo;
-      AsyncStorage.setItem(STORAGE_KEYS.STORED_GROUP, chosenPromo);
-      ToastAndroid.show('Redémarrer l\'application pour que les options soient prises en comptes !', ToastAndroid.LONG);
-      this.setState({ selectedItem: chosenPromo, group: chosenPromo });
-    }).catch((error) => {
-      ToastAndroid.show(error.error || error.message, ToastAndroid.LONG);
+    var doneApplying = new Promise((resolve, reject) => {
+      fetch(AJAX.UCTL, req).then((res) => {
+        if(res.ok) return res.json();
+      }).then((data) => {
+        __self__.props.route.group = chosenPromo;
+        AsyncStorage.setItem(STORAGE_KEYS.STORED_GROUP, chosenPromo);
+        resolve({ "group": chosenPromo });
+        this.setState({ selectedItem: chosenPromo, group: chosenPromo });
+      }).catch((error) => {
+        ToastAndroid.show(error.error || error.message, ToastAndroid.LONG);
+        resolve(error.error);
+      });
     });
+
+    return doneApplying;
   }
 
   renderDropdown() {
