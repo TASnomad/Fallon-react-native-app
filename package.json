@@ -12,6 +12,7 @@
     "react-native": "0.39.0",
     "react-native-checkbox": "^1.1.0",
     "react-native-datepicker": "^1.4.7",
+    "react-native-doc-viewer": "^2.3.2",
     "react-native-icon-checkbox": "^1.2.0",
     "react-native-lightbox": "^0.6.0",
     "react-native-push-notification": "^2.2.1",
