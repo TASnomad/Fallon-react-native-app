@@ -1,0 +1,6 @@
+function renderComponent:
+  1 - map all files
+  2 - split on / character
+  3 - get the second part of the Array
+  4 - render
+  5 - onPress call react-native-doc-viewer
