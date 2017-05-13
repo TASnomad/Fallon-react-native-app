@@ -91,18 +91,23 @@ export default class Menu extends Component {
               Infos des profs
           </Text>
 
-        <Text
-          onPress={ () => { this.props.onItemSelected('Settings') } }
-          style={ styles.item }>
-            Paramètres
+          <Text
+            onPress={ () => { this.props.onItemSelected('Fichiers') } }
+            style={ styles.item }>
+            Fichiers
           </Text>
 
-        <Text
-          onPress={ () => { this.props.onItemSelected('Infos') } }
-          style={ styles.item }>
-          A propos
-        </Text>
+          <Text
+            onPress={ () => { this.props.onItemSelected('Settings') } }
+            style={ styles.item }>
+              Paramètres
+          </Text>
 
+          <Text
+            onPress={ () => { this.props.onItemSelected('Infos') } }
+            style={ styles.item }>
+            A propos
+            </Text>
         </View>
 
         <Text
