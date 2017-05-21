@@ -6,9 +6,13 @@ import {
   ScrollView,
   View,
   StyleSheet,
+  Text,
+  TouchableOpacity,
 } from 'react-native';
 
 import SideBar from '../components/SideBar';
+
+import OpenFile from 'react-native-doc-viewer';
 
 import PROMOS from '../utils/promo';
 import AJAX from '../utils/ajaxURL';
@@ -24,6 +28,21 @@ const styles = StyleSheet.create({
     width: window.width,
     height: window.height,
   },
+
+  previewContainer: {
+    padding: 15,
+    margin: 15,
+  },
+
+  preview: {
+    width: 115,
+    height: 115,
+  },
+
+  filename: {
+    alignSelf: 'auto',
+    fontSize: 20,
+  }
 });
 
 export default class Fichiers extends Component {
@@ -38,6 +57,18 @@ export default class Fichiers extends Component {
     };
 
     this.fetchFiles();
+  }
+
+  lookingFile(element, filename) {
+    var URI = AJAX.UPLOAD_BASE + this.state.group + "/" + filename;
+    var promptName = filename.split(".")[0];
+    OpenFile.openDoc([{
+        url: URI,
+        fileName: promptName
+      }], (error, url) => {
+        if(error) console.error(error);
+        else console.log("Opening URI: " + url);
+    });
   }
 
   fetchFiles() {
@@ -61,10 +92,13 @@ export default class Fichiers extends Component {
       var tmp = [];
       var t = JSON.parse(data.files);
 
-      for(var i = 0, len = t.length; i < len; i++) tmp.push(t[i]);
+      if(Array.isArray(t))
+        t.forEach(function(one) { tmp.push(JSON.parse(one)); });
+      else
+        tmp.push(t);
 
       __that__.setState({ files: tmp });
-      __that__.renderFiles();
+      __that__.forceUpdate();
     })
     .catch((error) => {
       console.error(error);
@@ -73,17 +107,34 @@ export default class Fichiers extends Component {
   }
 
   renderFiles() {
-    console.log(this.state.files);
-    console.log(Object.keys(this.state.files));
-    return this.state.files.map((chunck, index) => {
-      // var mime = chunck[];
-    });
+    var toReturn = [];
+
+    this.state.files.forEach((chunck) => {
+      var filename = Object.keys(chunck);
+      var mime = (filename[0].split("."))[1];
+      toReturn.push(
+        <View style={ styles.previewContainer }>
+          <TouchableOpacity onPress={ this.lookingFile.bind(this, chunck, filename[0]) }>
+            <Image
+              source={ (mime === "pdf") ? PDF : IMG }
+              style={ styles.preview }
+            />
+          </TouchableOpacity>
+          <Text style={ styles.filename }>{ filename }</Text>
+        </View>
+      );
+      });
+
+      return toReturn;
   }
 
   render() {
+    console.log(this.state.files);
+    let t = this.renderFiles();
     return (
       <SideBar group={ this.state.originalGroup } nom={ this.state.nom } navigator={ this.props.navigator }>
         <ScrollView style={ styles.cont }>
+          { t }
         </ScrollView>
       </SideBar>
     );
