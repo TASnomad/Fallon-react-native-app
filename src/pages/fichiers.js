@@ -11,8 +11,9 @@ import {
 } from 'react-native';
 
 import SideBar from '../components/SideBar';
-
-import OpenFile from 'react-native-doc-viewer';
+import RNFetchBlob from 'react-native-fetch-blob';
+const android =  RNFetchBlob.android;
+// import OpenFile from 'react-native-doc-viewer';
 
 import PROMOS from '../utils/promo';
 import AJAX from '../utils/ajaxURL';
@@ -60,14 +61,22 @@ export default class Fichiers extends Component {
   }
 
   lookingFile(element, filename) {
-    var URI = AJAX.UPLOAD_BASE + this.state.group + "/" + filename;
-    var promptName = filename.split(".")[0];
-    OpenFile.openDoc([{
-        url: URI,
-        fileName: promptName
-      }], (error, url) => {
-        if(error) console.error(error);
-        else console.log("Opening URI: " + url);
+    let URI = AJAX.UPLOAD + this.state.group + "/" + filename;
+    let dirs = RNFetchBlob.fs.dirs;
+
+    RNFetchBlob.config({
+      fileCache: true,
+      addAndroidDownloads: {
+        notification: true,
+        title: 'Téléchargement du fichier ' + filename,
+        description: filename + ' / promo ' + this.state.group,
+        mime: element[filename],
+        mediaScannable: true,
+      }
+    })
+    .fetch('GET', URI, { 'Cache-Control': 'no-store' })
+    .then((res) => {
+      android.actionViewIntent(res.path(), element[filename]);
     });
   }
 
@@ -129,7 +138,6 @@ export default class Fichiers extends Component {
   }
 
   render() {
-    console.log(this.state.files);
     let t = this.renderFiles();
     return (
       <SideBar group={ this.state.originalGroup } nom={ this.state.nom } navigator={ this.props.navigator }>
