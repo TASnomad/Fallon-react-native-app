@@ -64,20 +64,17 @@ export default class Fichiers extends Component {
     let URI = AJAX.UPLOAD + this.state.group + "/" + filename;
     let dirs = RNFetchBlob.fs.dirs;
 
-    RNFetchBlob.config({
-      fileCache: true,
-      addAndroidDownloads: {
-        notification: true,
-        title: 'Téléchargement du fichier ' + filename,
-        description: filename + ' / promo ' + this.state.group,
-        mime: element[filename],
-        mediaScannable: true,
-      }
-    })
-    .fetch('GET', URI, { 'Cache-Control': 'no-store' })
+    RNFetchBlob.fetch('GET', URI)
     .then((res) => {
-      android.actionViewIntent(res.path(), element[filename]);
-    });
+      let base64Str = res.base64();
+      let location = dirs.DownloadDir + '/' + filename;
+      RNFetchBlob.fs.writeFile(location, base64Str, 'base64');
+      RNFetchBlob.fs.scanFile([ { path: location, mime: element[filename] } ])
+      .then(() => {
+        android.actionViewIntent(location, element[filename]);
+      })
+      .catch(() => { console.error("error !"); });
+    }).catch((error) => { console.error("Oops: " + error); });
   }
 
   fetchFiles() {
