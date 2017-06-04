@@ -11,6 +11,7 @@ import dashboard from './pages/Dashboard';
 import settings from './pages/settings';
 import flow from './pages/flow';
 import infos from './pages/infos';
+import fichiers from './pages/fichiers';
 
 var styles = StyleSheet.create({ container: { flex: 1 } });
 
@@ -22,6 +23,7 @@ const ROUTES = {
   settings: settings,
   flow: flow,
   infos: infos,
+  fichiers: fichiers,
 };
 
 var _navigator;
