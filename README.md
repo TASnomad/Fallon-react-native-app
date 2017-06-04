@@ -40,9 +40,12 @@ __Android__
     * Ajout d'une section pour récupérer les fichiers mis en libre service pour sa promotion
   * Modification(s):
     * Modification / remplacement du module Lightbox
+  * BUG(s):
+    * Android 7, 7.1.1, 8.0 (aka O) retournent un ```permision denied``` quand react-native-fetch-blob télécharge un fichier dans le dossier data de l'application
+      * HACK: téléchargement sauvegardé dans le dossier ``` Download ``` de l'appareil
 
 
 __Développement iOS démarré__
  * BUG(S):
   * Notifications iOS non implémentée
-  * EDT sur iOS dashboard non affichable
+    * WONTFIX: APN (Apple push notifications) non récupérables
