@@ -38,11 +38,14 @@ __Mise en ligne sur les stores__
 __Android__
   * Ajout(s):
     * Ajout d'une section pour récupérer les fichiers mis en libre service pour sa promotion
-  * Modification(s):
-    * Modification / remplacement du module Lightbox
+  * Correction(s):
+    * Emploi du temps de la promo LBDISE affichable
   * BUG(s):
-    * Android 7, 7.1.1, 8.0 (aka O) retournent un ```permision denied``` quand react-native-fetch-blob télécharge un fichier dans le dossier data de l'application
+    * Android 7, 7.1.1, 8.0 (aka O) retournent un ```permission denied``` quand react-native-fetch-blob télécharge un fichier dans le dossier data de l'application
       * HACK: téléchargement sauvegardé dans le dossier ``` Download ``` de l'appareil
+  * TODO:
+    * Ajout de timeout sur les appels AJAX
+    * Centralisation de données de l'application
 
 
 __Développement iOS démarré__
