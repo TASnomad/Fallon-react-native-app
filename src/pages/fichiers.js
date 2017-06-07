@@ -96,7 +96,8 @@ export default class Fichiers extends Component {
     })
     .then((data) => {
       var tmp = [];
-      var t = JSON.parse(data.files);
+
+      var t = (Array.isArray(data.files)) ? data.files : JSON.parse(data.files);
 
       if(Array.isArray(t))
         t.forEach(function(one) { tmp.push(JSON.parse(one)); });
