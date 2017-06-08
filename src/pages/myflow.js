@@ -130,7 +130,7 @@ export default class Flow extends Component {
             colors={['#000000', '#FFFFFF', '#F44336']}
             progressBackgroundColor="#FFFFFF" />
         }>
-        <Text style={ flowSheet.nothingText }>Wow. Aucune absences ou retards !</Text>
+        <Text style={ flowSheet.nothingText }>Pas de messages pour le moment !</Text>
         <Button style={ flowSheet.retryBtn } title="Réessayer" onPress={ this.retrieveFlow.bind(this) }/>
       </View>
     );
