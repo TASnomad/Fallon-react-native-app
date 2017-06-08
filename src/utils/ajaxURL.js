@@ -3,6 +3,7 @@ const UPLOAD_BASE = 'http://dwarves.iut-fbleau.fr/~gosset/PT/materialize/Upload/
 
 export default URLS = {
   CONNEXION: 'http://dwarves.iut-fbleau.fr/~barreau/pt/connexion.php',
+  MYFLOW: 'http://dwarves.iut-fbleau.fr/~barreau/pt/myflow.php',
   FLOW: 'http://dwarves.iut-fbleau.fr/~barreau/pt/flow.php',
   UCTL: 'http://dwarves.iut-fbleau.fr/~barreau/pt/uctl.php',
   EDT: 'http://www.iut-fbleau.fr/EDT/consulter/EDT/',

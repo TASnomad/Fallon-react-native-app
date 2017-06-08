@@ -110,9 +110,7 @@ export default class SideBar extends Component {
         </View>
         <View style={ styles.container }>
           <View>
-            <Text style={ styles.appName }>
-              fal!on
-            </Text>
+            <Text style={ styles.appName }> fal<Text style={{ color: "black" }}>!</Text>on</Text>
           </View>
           { this.props.children }
         </View>

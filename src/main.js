@@ -9,6 +9,7 @@ import bootsplash from './pages/bootsplash';
 import login from './pages/login';
 import dashboard from './pages/Dashboard';
 import settings from './pages/settings';
+import myflow from './pages/myflow';
 import flow from './pages/flow';
 import infos from './pages/infos';
 import fichiers from './pages/fichiers';
@@ -21,6 +22,7 @@ const ROUTES = {
   login: login,
   dashboard: dashboard,
   settings: settings,
+  myflow: myflow,
   flow: flow,
   infos: infos,
   fichiers: fichiers,

@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 
 const window = Dimensions.get('window');
-const uri = 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png';
 
 const styles = StyleSheet.create({
   menu: {
@@ -67,12 +66,26 @@ export default class Menu extends Component {
   };
 
   render() {
+    const face = Math.floor(Math.random() * 9);
+    let src = null;
+
+    switch(face) {
+      case 0: src = require("../res/faces/0.png"); break;
+      case 1: src = require("../res/faces/1.png"); break;
+      case 2: src = require("../res/faces/2.png"); break;
+      case 3: src = require("../res/faces/3.png"); break;
+      case 4: src = require("../res/faces/4.png"); break;
+      case 5: src = require("../res/faces/5.png"); break;
+      case 6: src = require("../res/faces/6.png"); break;
+      case 7: src = require("../res/faces/7.png"); break;
+      case 8: src = require("../res/faces/8.png"); break;
+      case 9: src = require("../res/faces/9.png"); break;
+    }
+
     return (
       <ScrollView scrollsToTop={ false } contentContainerStyle={ styles.menu }>
         <View style={ styles.avatarContainer }>
-          <Image
-            style={ styles.avatar }
-            source={ { uri, } } />
+          <Image style={ styles.avatar } source={ src } />
             <Text style={ styles.name }> { this.props.nom } </Text>
             <Text style={ styles.group }> { this.props.group } </Text>
         </View>
@@ -89,6 +102,12 @@ export default class Menu extends Component {
             onPress={ () => { this.props.onItemSelected('Flow') } }
             style={ styles.item }>
               Infos des profs
+          </Text>
+
+          <Text
+            onPress={ () => { this.props.onItemSelected('Myflow') } }
+            style={ styles.item }>
+            Mes infos
           </Text>
 
           <Text
