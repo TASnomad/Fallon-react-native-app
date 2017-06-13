@@ -118,7 +118,7 @@ export default class Dashboard extends Component {
         date: dateStr,
         day: dayOfWeek,
         week: week,
-        url: URLS.EDT + week.toString() + '-' + dayOfWeek.toString() + '-' + PROMOS[this.state.group] + '.gif',
+        url: URLS.EDT + week.toString() + '-' + dayOfWeek.toString() + '-' + PROMOS[this.state.group] + '.gif?_=' + (new Date()).getTime(),
       });
   }
 
@@ -161,25 +161,10 @@ export default class Dashboard extends Component {
       date: toPickerFormat(now),
       day: dayOfWeek,
       week: week,
-      url: URLS.EDT + week.toString() + '-' + dayOfWeek.toString() + '-' + PROMOS[grp] + '.gif',
+      url: URLS.EDT + week.toString() + '-' + dayOfWeek.toString() + '-' + PROMOS[grp] + '.gif?_=' + (new Date()).getTime(),
     };
 
     return obj;
-  }
-
-  renderCarousel() {
-    console.log(this.state.url);
-    return (
-      <Carousel style={{ width: window.width, height: window.height }}>
-        <Image
-          style={{ flex: 1  }}
-          resizeMode="cover"
-          source={{ uri: this.state.url }}/>
-        <View style={{backgroundColor:'#6C7A89',flex: 1}}/>
-        <View style={{backgroundColor:'#019875',flex: 1}}/>
-        <View style={{backgroundColor:'#E67E22',flex: 1}}/>
-      </Carousel>
-    );
   }
 
   render() {
