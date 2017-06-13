@@ -15,7 +15,7 @@ Ce projet est constitué des composants suivants:
  -----------------
 
 Phase béta __lancée__ sur le play store: https://play.google.com/store/apps/details?id=com.fallon.app&hl=fr
-Phase béta iOS à venir
+Phase béta iOS __annulée__, manque de temps et de moyens pour mettre en place la version iOS
 
  # Note pour les devs
  --------------------
@@ -31,8 +31,6 @@ __Mise en ligne sur les stores__
       ```
       versionCode X, versionName="X.Y"
       ```
-  * IOS:
-    *  __A venir ...__
 
 
 __Android__
@@ -40,6 +38,7 @@ __Android__
     * Ajout d'une section pour récupérer les fichiers mis en libre service pour sa promotion
   * Correction(s):
     * Emploi du temps de la promo LBDISE affichable
+    * Cache Busting pour les requètes ajax de l'EDT
   * BUG(s):
     * Android 7, 7.1.1, 8.0 (aka O) retournent un ```permission denied``` quand react-native-fetch-blob télécharge un fichier dans le dossier data de l'application
       * HACK: téléchargement sauvegardé dans le dossier ``` Download ``` de l'appareil

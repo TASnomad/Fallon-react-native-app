@@ -90,8 +90,8 @@ android {
         applicationId "com.fallon.app"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 6
-        versionName "2.4"
+        versionCode 7
+        versionName "2.5"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
