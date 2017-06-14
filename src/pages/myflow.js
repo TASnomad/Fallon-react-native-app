@@ -144,7 +144,7 @@ export default class Flow extends Component {
       return (
         <View key={ index } style={ flowSheet.flowBlox }>
           <Text style={ flowSheet.flowHeader }>
-            Envoyé le { chunck.date_mes } par { (chunck.envoye_par == "") ? "un Anonyme" : chunck.envoye_par }
+            Envoyé le { chunck.date_mes } par { (chunck.envoye_par == "") ? "l'administrateur" : chunck.envoye_par }
           </Text>
 
           <Text style={ flowSheet.flowContent }>
