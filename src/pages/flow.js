@@ -144,7 +144,7 @@ export default class Flow extends Component {
       return (
         <View key={ index } style={ flowSheet.flowBlox }>
           <Text style={ flowSheet.flowHeader }>
-            { chunck.type_imprevu }  le { chunck.date_mes }
+            { chunck.type_imprevu }  le { chunck.date_mes } envoyé par { (chunck.envoye_par == "") ? "un Anonyme" : chunck.envoye_par }
           </Text>
 
           <Text style={ flowSheet.flowContent }>

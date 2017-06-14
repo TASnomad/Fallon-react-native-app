@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  ActivityIndicator,
   AsyncStorage,
   Image,
   StyleSheet,
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     flex: 1,
     justifyContent: 'center',
-  }
+  },
 });
 
 var _navigator = null;
@@ -46,6 +47,10 @@ export default class Bootsplash extends Component {
     var __that__ = this;
 
     _navigator = this.props.navigator;
+
+    this.state = {
+      loading: false,
+    };
 
     PushNotification.configure({
       onRegister: function(token) {
@@ -85,7 +90,7 @@ export default class Bootsplash extends Component {
     var group = null;
     var autolog = null;
 
-    var sub_fct = this.submit;
+    var sub_fct = this.submit
 
     AsyncStorage.getItem(STORAGE_KEYS.STORED_LOGIN).then((stored_login) => {
       if(stored_login) login = stored_login;
@@ -146,6 +151,10 @@ export default class Bootsplash extends Component {
     return (
       <View style={ styles.container }>
         <Image source={ Img } />
+        <ActivityIndicator
+          animating={ true }
+          color="#4CAF50"
+          size="large" />
       </View>
     );
   }

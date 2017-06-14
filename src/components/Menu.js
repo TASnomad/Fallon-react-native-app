@@ -12,6 +12,9 @@ import {
 
 const window = Dimensions.get('window');
 
+let face = 0;
+let src = null;
+
 const styles = StyleSheet.create({
   menu: {
     height: window.height,
@@ -65,10 +68,9 @@ export default class Menu extends Component {
     onItemSelected: React.PropTypes.func.isRequired,
   };
 
-  render() {
-    const face = Math.floor(Math.random() * 9);
-    let src = null;
-
+  componentWillMount() {
+    face =  Math.floor(Math.random() * 9);
+        
     switch(face) {
       case 0: src = require("../res/faces/0.png"); break;
       case 1: src = require("../res/faces/1.png"); break;
@@ -81,7 +83,9 @@ export default class Menu extends Component {
       case 8: src = require("../res/faces/8.png"); break;
       case 9: src = require("../res/faces/9.png"); break;
     }
+  }
 
+  render() {
     return (
       <ScrollView scrollsToTop={ false } contentContainerStyle={ styles.menu }>
         <View style={ styles.avatarContainer }>
